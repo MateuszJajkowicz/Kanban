@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "kanban-mj"
+  },
+  "targets": {
+    "kanban-mj": {
+      "hosting": {
+        "Kanban": [
+          "mj-kanban"
+        ]
+      }
+    }
+  }
+}

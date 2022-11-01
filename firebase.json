@@ -4,8 +4,7 @@
   },
   "hosting": {
     "target": "Kanban",
-    "site": "mj-kanban",
-    "public": "public",
+    "public": "dist/kanban",
     "ignore": [
       "**/.*"
     ],

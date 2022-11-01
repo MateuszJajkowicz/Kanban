@@ -23,9 +23,8 @@
   }
 
   .handle {
-    position: relative;
-    top: 5px;
-    left: 0;
+    position: absolute;
+    right: 4px;
     cursor: move;
   }
 }

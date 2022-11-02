@@ -29,7 +29,7 @@ export class BoardListComponent implements OnInit, OnDestroy {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
-    // this.boardService.sortBoards(this.boards);
+    this.boardService.sortBoards(this.boards);
   }
 
   openBoardDialog(): void {

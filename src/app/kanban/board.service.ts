@@ -64,12 +64,12 @@ export class BoardService {
     )
   }
 
-  // Run a batcj write to change the priority of each board for sorting
+  // Run a batch write to change the priority of each board for sorting
   sortBoards(boards: Board[]) {
     const db = firebase.firestore();
     const batch = db.batch();
     const refs = boards.map(b => db.collection('boards').doc(b.id));
     refs.forEach((ref, idx) => batch.update(ref, { priority: idx }));
+    batch.commit();
   }
-
 }

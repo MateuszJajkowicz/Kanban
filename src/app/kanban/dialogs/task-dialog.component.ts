@@ -32,10 +32,10 @@ import { BoardService } from '../board.service';
         {{ data.isNew ? 'Add Task' : 'Update Task' }}
       </button>
 
-      <!-- <app-delete-button
+      <app-delete-button
         (delete)="handleTaskDelete()"
         *ngIf="!data.isNew"
-      ></app-delete-button> -->
+      ></app-delete-button>
     </div>
   `
 })

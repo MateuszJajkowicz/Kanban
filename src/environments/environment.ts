@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    projectId: 'kanban-mj',
-    appId: '1:464635750480:web:eadbd7753b3706c80e0955',
-    storageBucket: 'kanban-mj.appspot.com',
-    apiKey: 'AIzaSyDSBWi6DhD5fd8YxJ4ZpZVqCYBpO1Mdh8o',
-    authDomain: 'kanban-mj.firebaseapp.com',
-    messagingSenderId: '464635750480',
+    apiKey: "AIzaSyBjW4O__QNYC9s-Po3jGw76GdUfgPtnrvw",
+    authDomain: "kanban-testserver.firebaseapp.com",
+    projectId: "kanban-testserver",
+    storageBucket: "kanban-testserver.appspot.com",
+    messagingSenderId: "495893541124",
+    appId: "1:495893541124:web:17788ba8250b7714e06051"
   },
 };
 

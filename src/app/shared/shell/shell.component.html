@@ -34,7 +34,12 @@
       <span class="fill-space"></span>
       <div *ngIf="!(isHandset$ | async)">
         <a mat-button routerLink="/kanban">🍱 Kanban</a>
-        <a mat-button routerLink="/login">🔑 Login</a>
+        <a mat-button routerLink="/login" *ngIf="!(afAuth.authState | async)"
+          >🔑 Login</a
+        >
+        <a mat-button routerLink="/login" *ngIf="afAuth.authState | async"
+          >🔑 Profile</a
+        >
       </div>
     </mat-toolbar>
 

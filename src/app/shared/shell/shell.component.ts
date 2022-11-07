@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss']
 })
-export class ShellComponent implements OnInit {
+export class ShellComponent {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset])
     .pipe(
@@ -17,9 +18,6 @@ export class ShellComponent implements OnInit {
       shareReplay()
     );
 
-  constructor( private breakpointObserver: BreakpointObserver) { }
-
-  ngOnInit(): void {
-  }
+  constructor(private breakpointObserver: BreakpointObserver, public afAuth: AngularFireAuth) { }
 
 }

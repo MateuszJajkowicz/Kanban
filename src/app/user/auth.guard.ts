@@ -14,13 +14,13 @@ export class AuthGuard implements CanActivate {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        return this.afAuth.user.pipe(
-          map((user): boolean => !!user),
-          tap((loggedIn: boolean) => {
-            if (!loggedIn) {
-              this.snack.authError();
-            }
-          })
-        );
-      }
+    return this.afAuth.user.pipe(
+      map((user): boolean => !!user),
+      tap((loggedIn: boolean) => {
+        if (!loggedIn) {
+          this.snack.authError();
+        }
+      })
+    );
+  }
 }

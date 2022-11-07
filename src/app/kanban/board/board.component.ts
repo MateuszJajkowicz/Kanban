@@ -1,5 +1,5 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from '../board.model';
 import { BoardService } from '../board.service';
@@ -13,12 +13,30 @@ import { TaskDialogComponent } from '../dialogs/task-dialog.component';
 export class BoardComponent {
 
   @Input() board: any;
+  @Output() taskMoved = new EventEmitter<{ previousContainer: string; newContainer: string }>();
 
   constructor(private boardService: BoardService, public dialog: MatDialog) { }
 
   taskDrop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.board.tasks, event.previousIndex, event.currentIndex);
-    this.boardService.updateTasks(this.board.id, this.board.tasks);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        this.board.tasks,
+        event.previousIndex,
+        event.currentIndex
+      );
+      this.boardService.updateTasks(this.board.id, this.board.tasks);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      this.taskMoved.emit({
+        previousContainer: event.previousContainer.id,
+        newContainer: event.container.id,
+      });
+    }
   }
 
   openDialog(task?: Task, idx?: number): void {

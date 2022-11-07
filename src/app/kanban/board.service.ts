@@ -38,6 +38,22 @@ export class BoardService {
       .update({ tasks });
   }
 
+  // Move task to another board
+  moveTask(
+    previousBoardId: string,
+    previousTasks: Task[] | undefined,
+    newBoardId: string,
+    newTasks: Task[] | undefined,
+  ) {
+    const db = firebase.firestore();
+    const batch = db.batch();
+    const previousRef = db.collection('boards').doc(previousBoardId);
+    const nextRef = db.collection('boards').doc(newBoardId);
+    batch.update(previousRef, { tasks: previousTasks });
+    batch.update(nextRef, { tasks: newTasks });
+    batch.commit().catch((err) => console.error(err));
+  }
+
   // Delete task
   deleteTask(boardId: string, task: Task) {
     return this.db
@@ -72,6 +88,6 @@ export class BoardService {
     const batch = db.batch();
     const refs = boards.map(b => db.collection('boards').doc(b.id));
     refs.forEach((ref, idx) => batch.update(ref, { priority: idx }));
-    batch.commit();
+    batch.commit().catch((err) => console.error(err));;
   }
 }

@@ -32,6 +32,12 @@ export class BoardListComponent implements OnInit, OnDestroy {
     this.boardService.sortBoards(this.boards);
   }
 
+  taskMoved({ previousContainer, newContainer }: {previousContainer: any, newContainer: any}) {
+    const previousTasks = this.boards.find((b) => b.id === previousContainer)?.tasks;
+    const newTasks = this.boards.find((b) => b.id === newContainer)?.tasks;
+    this.boardService.moveTask(previousContainer, previousTasks, newContainer, newTasks);
+  }
+
   openBoardDialog(): void {
     const dialogRef = this.dialog.open(BoardDialogComponent, {
       width: '400px',

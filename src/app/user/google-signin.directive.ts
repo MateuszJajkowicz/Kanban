@@ -1,5 +1,6 @@
 import { Directive, HostListener } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 import { GoogleAuthProvider } from 'firebase/auth';
 
 @Directive({
@@ -7,7 +8,7 @@ import { GoogleAuthProvider } from 'firebase/auth';
 })
 export class GoogleSigninDirective {
 
-  constructor(private afAuth: AngularFireAuth) { }
+  constructor(private afAuth: AngularFireAuth, private router: Router) { }
 
   @HostListener('click')
   onclick() {
@@ -22,7 +23,7 @@ export class GoogleSigninDirective {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        console.log('You have been successfully logged in!');
+        this.router.navigate(['/', 'kanban']);
       })
       .catch((error) => {
         console.log(error);

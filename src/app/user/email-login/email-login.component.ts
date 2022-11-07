@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-login',
@@ -10,11 +11,11 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class EmailLoginComponent implements OnInit {
 
   form: FormGroup;
-  type: 'login' | 'signup' | 'reset' = 'signup';
+  type: 'login' | 'signup' | 'reset' = 'login';
   loading = false;
   serverMessage: unknown;
 
-  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder) { }
+  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -69,6 +70,7 @@ export class EmailLoginComponent implements OnInit {
     try {
       if (this.isLogin) {
         await this.afAuth.signInWithEmailAndPassword(email, password);
+        this.router.navigate(['/', 'kanban'])
       }
       if (this.isSignup) {
         await this.afAuth.createUserWithEmailAndPassword(email, password);

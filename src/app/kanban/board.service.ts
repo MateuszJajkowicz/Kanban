@@ -30,6 +30,13 @@ export class BoardService {
       .delete();
   }
 
+  updateBoardName(boardId: string, title: string) {
+    return this.db
+      .collection('boards')
+      .doc(boardId)
+      .update({ title });
+  }
+
   // Update board
   updateTasks(boardId: string, tasks: Task[]) {
     return this.db

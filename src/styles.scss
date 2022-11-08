@@ -83,3 +83,15 @@ a {
   color: white;
   text-decoration: none;
 }
+
+.mat-form-field {
+  .mat-form-field-underline {
+    display: none;
+  }
+  .mat-form-field-infix {
+    padding: 0.4375em 0 0 0;
+  }
+  .mat-form-field-wrapper{
+    width: 16rem;
+  }
+}

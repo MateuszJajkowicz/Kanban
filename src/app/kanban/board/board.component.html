@@ -3,7 +3,22 @@
     <!-- Slot for handle -->
     <ng-content></ng-content>
     <mat-card-title>
-      {{ board.title }}
+      <form class="example-form" [formGroup]="formGroup">
+        <mat-form-field class="no-bottom">
+          <textarea
+            class="test"
+            type="text"
+            matInput
+            formControlName="boardNameFormControl"
+            (change)="handleBoardNameChange()"
+            [errorStateMatcher]="boardNameMatcher"
+            required
+            cdkTextareaAutosize
+          >
+          </textarea>
+          <mat-error> Name is <strong>required</strong> </mat-error>
+        </mat-form-field>
+      </form>
     </mat-card-title>
   </mat-card-header>
 

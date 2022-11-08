@@ -1,21 +1,40 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from '../board.model';
 import { BoardService } from '../board.service';
 import { TaskDialogComponent } from '../dialogs/task-dialog.component';
+import { BoardNameErrorStateMatcherService } from "../../services/board-name-error-state-matcher.service";
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent {
+export class BoardComponent implements OnInit {
 
-  @Input() board: any;
+  @Input() board: any = [];
   @Output() taskMoved = new EventEmitter<{ previousContainer: string; newContainer: string }>();
+  boardNameMatcher = new BoardNameErrorStateMatcherService();
 
-  constructor(private boardService: BoardService, public dialog: MatDialog) { }
+  constructor(private boardService: BoardService, public dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.setValue();
+  }
+
+  public formGroup = new FormGroup({
+    boardNameFormControl: new FormControl('', [Validators.required])
+  });
+
+  get getboardNameFormControl(): any {
+    return this.formGroup.get('boardNameFormControl')
+  }
+
+  setValue() {
+    this.formGroup.setValue({boardNameFormControl: this.board.title});
+  }
 
   taskDrop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -66,5 +85,11 @@ export class BoardComponent {
 
   handleDelete() {
     this.boardService.deleteBoard(this.board.id);
+  }
+
+  handleBoardNameChange() {
+    if (this.getboardNameFormControl.value != '') {
+      this.boardService.updateBoardName(this.board.id, this.getboardNameFormControl.value);
+    }
   }
 }

@@ -31,16 +31,32 @@
     [cdkDropListData]="board.tasks"
     (cdkDropListDropped)="taskDrop($event)"
   >
-    <div
-      cdkDrag
-      class="inner-card"
-      *ngFor="let task of board.tasks; let i = index"
-      (click)="openDialog(task, i)"
-    >
-      <mat-card [ngClass]="task.label">
-        {{ task.description }}
-      </mat-card>
-    </div>
+    <div *ngIf="isMobile; then thenBlock; else elseBlock"></div>
+    <ng-template #thenBlock>
+      <div
+        cdkDrag
+        [cdkDragStartDelay]="500"
+        class="inner-card"
+        *ngFor="let task of board.tasks; let i = index"
+        (click)="openDialog(task, i)"
+      >
+        <mat-card [ngClass]="task.label">
+          {{ task.description }}
+        </mat-card>
+      </div>
+    </ng-template>
+    <ng-template #elseBlock>
+      <div
+        cdkDrag
+        class="inner-card"
+        *ngFor="let task of board.tasks; let i = index"
+        (click)="openDialog(task, i)"
+      >
+        <mat-card [ngClass]="task.label">
+          {{ task.description }}
+        </mat-card>
+      </div>
+    </ng-template>
 
     <button mat-stroked-button (click)="openDialog()" name="add">
       <mat-icon>add</mat-icon>

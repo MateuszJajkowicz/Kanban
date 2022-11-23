@@ -6,6 +6,7 @@ import { Task } from '../board.model';
 import { BoardService } from '../board.service';
 import { TaskDialogComponent } from '../dialogs/task-dialog.component';
 import { BoardNameErrorStateMatcherService } from "../../services/board-name-error-state-matcher.service";
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-board',
@@ -14,14 +15,24 @@ import { BoardNameErrorStateMatcherService } from "../../services/board-name-err
 })
 export class BoardComponent implements OnInit {
 
+  isMobile: boolean
   @Input() board: any = [];
   @Output() taskMoved = new EventEmitter<{ previousContainer: string; newContainer: string }>();
   boardNameMatcher = new BoardNameErrorStateMatcherService();
 
-  constructor(private boardService: BoardService, public dialog: MatDialog) {}
+  constructor(
+    private deviceService: DeviceDetectorService,
+    private boardService: BoardService,
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
+    this.deviceCheck();
     this.setValue();
+  }
+
+  deviceCheck() {
+    this.isMobile = this.deviceService.isMobile();
   }
 
   public formGroup = new FormGroup({

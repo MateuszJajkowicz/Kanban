@@ -3,7 +3,8 @@
     <!-- Slot for handle -->
     <ng-content></ng-content>
     <mat-card-title>
-      <form class="example-form" [formGroup]="formGroup">
+      {{ board.title }}
+      <!-- <form class="example-form" [formGroup]="formGroup">
         <mat-form-field class="no-bottom">
           <textarea
             class="title"
@@ -19,7 +20,7 @@
           </textarea>
           <mat-error> Name is <strong>required</strong> </mat-error>
         </mat-form-field>
-      </form>
+      </form> -->
     </mat-card-title>
   </mat-card-header>
 

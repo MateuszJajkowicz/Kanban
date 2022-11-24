@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoardDialogComponent } from './board-dialog.component';
+import { BoardDialogComponent } from './new-board-dialog.component';
 
 describe('BoardDialogComponent', () => {
   let component: BoardDialogComponent;

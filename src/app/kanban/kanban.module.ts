@@ -9,7 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BoardListComponent } from './board-list/board-list.component';
 import { BoardComponent } from './board/board.component';
-import { BoardDialogComponent } from './dialogs/board-dialog.component';
+import { BoardDialogComponent } from './dialogs/new-board-dialog.component';
 import { TaskDialogComponent } from './dialogs/task-dialog.component';
 
 

@@ -8,18 +8,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
     <div mat-dialog-content>
       <p>What shall we call this board?</p>
       <mat-form-field>
-        <input placeholder="title" matInput [(ngModel)]="data.title"/>
+        <input placeholder="title" matInput [(ngModel)]="data.title" cdkFocusInitial/>
       </mat-form-field>
     </div>
     <div mat-dialog-actions>
+      <button mat-raised-button color="accent" [mat-dialog-close]="data.title">
+        Create
+      </button>
       <button mat-button (click)="onNoClick()">
         Cancel
       </button>
-      <button mat-button [mat-dialog-close]="data.title" cdkFocusInitial>
-        Create
-      </button>
     </div>
-
   `,
   styles: [
   ]

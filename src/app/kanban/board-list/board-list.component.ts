@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { BoardService } from '../board.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
-import { BoardDialogComponent } from '../dialogs/board-dialog.component';
+import { BoardDialogComponent } from '../dialogs/new-board-dialog.component';
 
 @Component({
   selector: 'app-board-list',

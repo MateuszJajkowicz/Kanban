@@ -15,6 +15,9 @@ import { BoardService } from '../board.service';
           [(ngModel)]="data.task.description"
         ></textarea>
       </mat-form-field>
+      <mat-error *ngIf="!data.task.description">
+        Task description is <strong>required</strong>
+      </mat-error>
       <br />
       <mat-button-toggle-group
         #group="matButtonToggleGroup"
@@ -28,8 +31,11 @@ import { BoardService } from '../board.service';
       </mat-button-toggle-group>
     </div>
     <div mat-dialog-actions>
-      <button mat-raised-button color="accent" [mat-dialog-close]="data">
+      <button mat-raised-button color="accent" [mat-dialog-close]="data" [disabled]="!data.task.description">
         {{ data.isNew ? 'Add Task' : 'Update Task' }}
+      </button>
+      <button mat-button (click)="onNoClick()">
+        Cancel
       </button>
 
       <app-delete-button

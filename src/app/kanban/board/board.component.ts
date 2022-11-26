@@ -1,12 +1,11 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from '../board.model';
 import { BoardService } from '../board.service';
 import { TaskDialogComponent } from '../dialogs/task-dialog.component';
-import { BoardNameErrorStateMatcherService } from "../../services/board-name-error-state-matcher.service";
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { BoardDialogComponent } from '../dialogs/board-dialog.component';
 
 @Component({
   selector: 'app-board',
@@ -18,7 +17,6 @@ export class BoardComponent implements OnInit {
   isMobile: boolean
   @Input() board: any = [];
   @Output() taskMoved = new EventEmitter<{ previousContainer: string; newContainer: string }>();
-  boardNameMatcher = new BoardNameErrorStateMatcherService();
 
   constructor(
     private deviceService: DeviceDetectorService,
@@ -28,23 +26,10 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.deviceCheck();
-    this.setValue();
   }
 
   deviceCheck() {
     this.isMobile = this.deviceService.isMobile();
-  }
-
-  public formGroup = new FormGroup({
-    boardNameFormControl: new FormControl('', [Validators.required])
-  });
-
-  get getboardNameFormControl(): any {
-    return this.formGroup.get('boardNameFormControl')
-  }
-
-  setValue() {
-    this.formGroup.setValue({boardNameFormControl: this.board.title});
   }
 
   taskDrop(event: CdkDragDrop<string[]>) {
@@ -69,10 +54,23 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  openDialog(task?: Task, idx?: number): void {
+  openBoardDialog(boardTitle: string): void {
+    const dialogRef = this.dialog.open(BoardDialogComponent, {
+      width: '400px',
+      data: { boardTitle }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+          this.boardService.updateBoardName(this.board.id, result);
+        }
+    });
+  }
+
+  openTaskDialog(task?: Task, idx?: number): void {
     const newTask = { label: 'purple' };
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      width: '500px',
+      width: '400px',
       data: task
         ? { task: { ...task }, isNew: false, boardId: this.board.id, idx }
         : { task: newTask, isNew: true }
@@ -96,11 +94,5 @@ export class BoardComponent implements OnInit {
 
   handleDelete() {
     this.boardService.deleteBoard(this.board.id);
-  }
-
-  handleBoardNameChange() {
-    if (this.getboardNameFormControl.value != '') {
-      this.boardService.updateBoardName(this.board.id, this.getboardNameFormControl.value);
-    }
   }
 }

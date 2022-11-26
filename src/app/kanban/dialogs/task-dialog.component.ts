@@ -13,6 +13,8 @@ import { BoardService } from '../board.service';
           placeholder="Task description"
           matInput
           [(ngModel)]="data.task.description"
+          cdkFocusInitial
+          cdkTextareaAutosize
         ></textarea>
       </mat-form-field>
       <mat-error *ngIf="!data.task.description">

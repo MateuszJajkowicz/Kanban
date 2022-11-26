@@ -14,6 +14,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
           matInput
           [(ngModel)]="data.boardTitle"
           cdkFocusInitial
+          cdkTextareaAutosize
         ></textarea>
       </mat-form-field>
       <mat-error *ngIf="!data.boardTitle">

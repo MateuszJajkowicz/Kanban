@@ -14,13 +14,14 @@ import { NewBoardDialogComponent } from '../dialogs/new-board-dialog.component';
 export class BoardListComponent implements OnInit, OnDestroy {
   boards: Board[];
   sub: Subscription;
+  isLoading: boolean = true;
 
   constructor(public boardService: BoardService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.sub = this.boardService
       .getUserBoards()
-      .subscribe(boards => this.boards = boards);
+      .subscribe(boards => { this.boards = boards, this.isLoading = false });
   }
 
   ngOnDestroy() {

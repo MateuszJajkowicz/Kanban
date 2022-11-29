@@ -7,23 +7,23 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   template: `
     <h1 mat-dialog-title>Board</h1>
     <div mat-dialog-content>
-      <p>Want to change board name?</p>
+      <p>What shall we call this board?</p>
       <mat-form-field>
         <textarea
           placeholder="Board title"
           matInput
-          [(ngModel)]="data.boardTitle"
+          [(ngModel)]="data.title"
           cdkFocusInitial
           cdkTextareaAutosize
         ></textarea>
       </mat-form-field>
-      <mat-error *ngIf="!data.boardTitle">
+      <mat-error *ngIf="!data.title">
         Board title is <strong>required</strong>
       </mat-error>
     </div>
     <div mat-dialog-actions>
-      <button mat-raised-button color="accent" [mat-dialog-close]="data.boardTitle" [disabled]="!data.boardTitle">
-        Change
+      <button mat-raised-button color="accent" [mat-dialog-close]="data.title" [disabled]="!data.title">
+        Create
       </button>
       <button mat-button (click)="onNoClick()">
         Cancel
@@ -31,12 +31,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
     </div>
   `
 })
-export class BoardDialogComponent {
+export class NewBoardDialogComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<BoardDialogComponent>,
+    public dialogRef: MatDialogRef<NewBoardDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

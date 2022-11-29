@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { KanbanRoutingModule } from './kanban-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,16 +8,18 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BoardListComponent } from './board-list/board-list.component';
 import { BoardComponent } from './board/board.component';
-import { BoardDialogComponent } from './dialogs/board-dialog.component';
+import { NewBoardDialogComponent } from './dialogs/new-board-dialog.component';
 import { TaskDialogComponent } from './dialogs/task-dialog.component';
+import { BoardDialogComponent } from './dialogs/board-dialog.component';
 
 
 @NgModule({
   declarations: [
     BoardListComponent,
     BoardComponent,
-    BoardDialogComponent,
-    TaskDialogComponent
+    NewBoardDialogComponent,
+    TaskDialogComponent,
+    BoardDialogComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +31,5 @@ import { TaskDialogComponent } from './dialogs/task-dialog.component';
     MatButtonToggleModule,
     ReactiveFormsModule,
   ],
-  // entryComponents: [BoardDialogComponent]
 })
 export class KanbanModule { }

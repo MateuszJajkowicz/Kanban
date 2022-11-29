@@ -28,6 +28,7 @@
     "firebase": "^9.13.0",
     "flatpickr": "^4.6.13",
     "i": "^0.3.7",
+    "ngx-device-detector": "^4.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

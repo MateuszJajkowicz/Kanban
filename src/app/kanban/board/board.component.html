@@ -1,26 +1,10 @@
 <mat-card class="outer-card">
   <mat-card-header class="card-header">
     <!-- Slot for handle -->
-    <ng-content></ng-content>
-    <mat-card-title>
-      <form class="example-form" [formGroup]="formGroup">
-        <mat-form-field class="no-bottom">
-          <textarea
-            class="title"
-            type="text"
-            matInput
-            formControlName="boardNameFormControl"
-            (change)="handleBoardNameChange()"
-            [errorStateMatcher]="boardNameMatcher"
-            required
-            cdkTextareaAutosize
-            label="title"
-          >
-          </textarea>
-          <mat-error> Name is <strong>required</strong> </mat-error>
-        </mat-form-field>
-      </form>
+    <mat-card-title class="title" (click)="openBoardDialog(board.title)">
+      {{ board.title }}
     </mat-card-title>
+    <ng-content></ng-content>
   </mat-card-header>
 
   <div
@@ -31,18 +15,34 @@
     [cdkDropListData]="board.tasks"
     (cdkDropListDropped)="taskDrop($event)"
   >
-    <div
-      cdkDrag
-      class="inner-card"
-      *ngFor="let task of board.tasks; let i = index"
-      (click)="openDialog(task, i)"
-    >
-      <mat-card [ngClass]="task.label">
-        {{ task.description }}
-      </mat-card>
-    </div>
+    <div *ngIf="isMobile; then thenBlock; else elseBlock"></div>
+    <ng-template #thenBlock>
+      <div
+        cdkDrag
+        [cdkDragStartDelay]="500"
+        class="inner-card"
+        *ngFor="let task of board.tasks; let i = index"
+        (click)="openTaskDialog(task, i)"
+      >
+        <mat-card [ngClass]="task.label">
+          {{ task.description }}
+        </mat-card>
+      </div>
+    </ng-template>
+    <ng-template #elseBlock>
+      <div
+        cdkDrag
+        class="inner-card"
+        *ngFor="let task of board.tasks; let i = index"
+        (click)="openTaskDialog(task, i)"
+      >
+        <mat-card [ngClass]="task.label">
+          {{ task.description }}
+        </mat-card>
+      </div>
+    </ng-template>
 
-    <button mat-stroked-button (click)="openDialog()" name="add">
+    <button mat-stroked-button (click)="openTaskDialog()" name="add">
       <mat-icon>add</mat-icon>
     </button>
 

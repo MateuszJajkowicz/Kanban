@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { SnackService } from '../services/snack.service';
 import { map, Observable, tap } from 'rxjs';
@@ -11,6 +11,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private afAuth: AngularFireAuth,
     private snack: SnackService,
+    private router: Router
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
@@ -19,6 +20,7 @@ export class AuthGuard implements CanActivate {
       tap((loggedIn: boolean) => {
         if (!loggedIn) {
           this.snack.authError();
+          this.router.navigate(['/', 'login'])
         }
       })
     );

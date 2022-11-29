@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoardDialogComponent } from './board-dialog.component';
+import { BoardDialogComponent } from './new-board-dialog.component';
 
 describe('BoardDialogComponent', () => {
   let component: BoardDialogComponent;
@@ -11,7 +11,9 @@ describe('BoardDialogComponent', () => {
       declarations: [ BoardDialogComponent ]
     })
     .compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(BoardDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

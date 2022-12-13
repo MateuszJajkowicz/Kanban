@@ -6,8 +6,10 @@ export interface Board{
 }
 
 export interface Task{
+  taskId?: string;
+  boardId?: string;
   description?: string;
   label?: 'purple' | 'blue' | 'green' | 'yellow' | 'red' | 'gray';
-  startDate?: Date | null;
-  endDate?: Date | null;
+  startDate?: Date;
+  endDate?: Date;
 }

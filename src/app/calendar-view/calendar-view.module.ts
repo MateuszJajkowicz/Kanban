@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CalendarRoutingModule } from './calendar-view-routing.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -10,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     CalendarRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -26,9 +26,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ],
-  // providers: [
-  //   HttpClient,
-  // ]
 })
 
 export class CalendarViewModule { }

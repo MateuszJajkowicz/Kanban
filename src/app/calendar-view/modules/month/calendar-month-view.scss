@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use 'sass:color';
-@import '../../variables.scss';
+@import '../../variables';
 
 $cal-month-view-vars: () !default;
 $cal-month-view-vars: map.merge($cal-vars, $cal-month-view-vars);
@@ -131,7 +131,7 @@ $cal-month-view-vars: map.merge($cal-vars, $cal-month-view-vars);
   .cal-day-badge {
     margin-top: 18px;
     margin-left: 10px;
-    display: inline-block;
+    display: none;
     min-width: 10px;
     padding: 3px 7px;
     font-size: 12px;

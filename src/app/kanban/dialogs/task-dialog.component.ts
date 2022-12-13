@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoardService } from '../board.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { toDate } from 'date-fns';
 
 @Component({
   selector: 'app-task-dialog',
@@ -95,7 +96,12 @@ export class TaskDialogComponent implements OnInit{
 
   setValue() {
     if (this.data.task.startDate && this.data.task.endDate) {
-      this.range.setValue({ start: this.data.task.startDate.toDate(), end: this.data.task.endDate.toDate() });
+      if (this.data.isCalendar) {
+        this.range.setValue({ start: toDate(this.data.task.startDate), end: toDate(this.data.task.endDate) });
+      }
+      else {
+        this.range.setValue({ start: this.data.task.startDate.toDate(), end: this.data.task.endDate.toDate() });
+      }
     }
   }
 

@@ -29,6 +29,7 @@
     "flatpickr": "^4.6.13",
     "i": "^0.3.7",
     "ngx-device-detector": "^4.0.1",
+    "randomstring": "^1.2.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -38,6 +39,7 @@
     "@angular/cli": "~14.2.7",
     "@angular/compiler-cli": "^14.2.0",
     "@types/jasmine": "~4.0.0",
+    "@types/randomstring": "^1.1.8",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

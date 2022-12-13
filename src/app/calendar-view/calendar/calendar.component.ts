@@ -1,24 +1,16 @@
 import {
   Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
   OnInit,
   OnDestroy,
   Inject,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
   isSameDay,
   isSameMonth,
-  addHours,
+  toDate,
 } from 'date-fns';
-import { Subject } from 'rxjs';
-// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject, Subscription } from 'rxjs';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -28,32 +20,49 @@ import {
 import { EventColor } from 'calendar-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
-import { BoardDialogComponent } from 'src/app/kanban/dialogs/board-dialog.component';
+import { BoardService } from 'src/app/kanban/board.service';
+import { Board, Task } from 'src/app/kanban/board.model';
+import { TaskDialogComponent } from 'src/app/kanban/dialogs/task-dialog.component';
 
 const colors: Record<string, EventColor> = {
   red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
+    primary: '#e74a4a',
+    secondary: '#e74a4a',
+    secondaryText: 'red'
   },
   blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
+    primary: '#71deff',
+    secondary: '#71deff',
+    secondaryText: 'blue'
   },
   yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
+    primary: '#ffcf44',
+    secondary: '#ffcf44',
+    secondaryText: 'yellow'
+  },
+  green: {
+    primary: '#36e9b6',
+    secondary: '#36e9b6',
+    secondaryText: 'green'
+  },
+  purple: {
+    primary: '#b15cff',
+    secondary: '#b15cff',
+    secondaryText: 'purple'
+  },
+  gray: {
+    primary: '#808080',
+    secondary: '#808080',
+    secondaryText: 'gray'
   },
 };
 
 @Component({
   selector: 'app-calendar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent  implements OnInit, OnDestroy{
-
-  // @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
 
@@ -74,73 +83,86 @@ export class CalendarComponent  implements OnInit, OnDestroy{
         this.handleEvent('Edited', event);
       },
     },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
+    // {
+    //   label: '<i class="fas fa-fw fa-trash-alt"></i>',
+    //   a11yLabel: 'Delete',
+    //   onClick: ({ event }: { event: CalendarEvent }): void => {
+    //     this.events = this.events.filter((iEvent) => iEvent !== event);
+    //     this.handleEvent('Deleted', event);
+    //   },
+    // },
   ];
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: { ...colors['red'] },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: { ...colors['blue'] },
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  sub: Subscription;
+
+  boards: Board[];
+  tasks: any[] = [];
+  events: CalendarEvent[] = [];
+  events2: any[] = [];
+  isLoading: boolean = true;
 
   activeDayIsOpen: boolean = true;
 
   private readonly darkThemeClass = 'dark-theme';
 
   constructor(
-    // private modal: NgbModal,
-    public dialog: MatDialog, @Inject(DOCUMENT) private document: any
+    public boardService: BoardService,
+    public dialog: MatDialog,
+    @Inject(DOCUMENT) private document: any
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.sub = this.boardService
+      .getUserBoards()
+      .subscribe(boards => { this.boards = boards, this.events = this.getEvents(boards), this.isLoading = false });
     this.document.body.classList.add(this.darkThemeClass);
   }
+
   ngOnDestroy(): void {
+    this.sub.unsubscribe();
     this.document.body.classList.remove(this.darkThemeClass);
+  }
+
+  getEvents(boards: (Board & { id: string; })[]): CalendarEvent<any>[]{
+    var eventsList: CalendarEvent[];
+    if (boards) {
+        boards.forEach(board => {
+          board.tasks?.forEach(task => {
+            task.boardId = board.id;
+          });
+          this.tasks = this.tasks
+            .concat(board.tasks)
+            .filter(task => task.startDate != undefined && task.endDate != undefined);
+        });
+      this.tasks.forEach(task => {
+        task.startDate = toDate(task.startDate.seconds*1000);
+        task.endDate = toDate(task.endDate.seconds*1000);
+      });
+      var events = this.tasks.map(task => {
+        return <CalendarEvent>{
+          id: task.boardId,
+          start: task.startDate,
+          end: task.endDate,
+          title: task.description,
+          color: colors[task.label],
+          actions: this.actions,
+          allDay: true,
+          cssClass: task.taskId,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true,
+          },
+          draggable: false,
+        };
+      });
+      eventsList = events;
+    }
+    else {
+      eventsList = [];
+    };
+    return eventsList;
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -177,23 +199,43 @@ export class CalendarComponent  implements OnInit, OnDestroy{
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
+    // console.log(action);
+    // console.log(event);
     // this.dialog.open(this.modalContent, { size: 'lg' });
     // this.openModal( this.modalData);
-    this.openModal();
+    this.openTaskDialog(event);
   }
 
-  openModal() {
-    const dialogRef = this.dialog.open(BoardDialogComponent, {
+  openTaskDialog(event: CalendarEvent): void {
+    var board = this.boards.filter(board => board.id == event.id)
+    var idx = board[0].tasks?.findIndex(item => item.taskId == event.cssClass);
+    var boardId = event.id?.toString();
+    var list = [];
+    var task2 = [];
+    list.push(event);
+    var task = list.map((x) => {
+      return <Task>{
+        taskId: x.cssClass,
+        description: x.title,
+        label: x.color?.secondaryText,
+        startDate: x.start,
+        endDate: x.end,
+      };
+    });
+    task2.push({ task: task[0], boardId: event.id, isNew: false, isCalendar: true})
+
+    const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: '400px',
-      data: {}
+      data: task2[0]
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.boardService.createBoard({
-        //   title: result,
-        //   priority: this.boards.length
-        // })
+        if (idx) {
+          const update = board[0].tasks;
+          update?.splice(idx, 1, result.task);
+          this.boardService.updateTasks(boardId, board[0].tasks);
+        }
       }
     })
   }

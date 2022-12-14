@@ -1,5 +1,8 @@
 # Kanban
 
+Check it yourself at [https://mj-kanban.web.app/](https://mj-kanban.web.app/). 
+Do you have any advices? Please contact me: [mateusz.jajkowicz@gmail.com](mailto:mateusz.jajkowicz@gmail.com)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.7.
 
 ## Development server

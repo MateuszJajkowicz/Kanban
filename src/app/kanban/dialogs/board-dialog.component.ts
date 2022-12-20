@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-board-dialog',
-  styleUrls: ['./task-dialog.component.scss'],
+  styleUrls: ['../../shared/dialogs/dialogs.component.scss'],
   template: `
     <h1 mat-dialog-title>Board</h1>
     <div mat-dialog-content>

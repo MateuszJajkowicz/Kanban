@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Board } from '../board.model';
+import { Board } from '../../models/board.model';
 import { Subscription } from 'rxjs';
-import { BoardService } from '../board.service';
+import { BoardService } from '../../services/board/board.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { NewBoardDialogComponent } from '../dialogs/new-board-dialog.component';

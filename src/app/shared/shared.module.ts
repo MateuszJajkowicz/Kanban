@@ -15,6 +15,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ShellComponent } from './shell/shell.component';
 import { DeleteButtonComponent } from './delete-button/delete-button.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const components = [ShellComponent, DeleteButtonComponent];
 
@@ -34,6 +36,8 @@ const modules = [
   MatInputModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
 ];
 
 @NgModule({

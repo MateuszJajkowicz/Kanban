@@ -18,7 +18,7 @@ export class BoardService {
     return this.db.collection('boards').add({
       ...data,
       uid: user?.uid,
-      tasks: [{description: 'Hello!', label: 'yellow'}]
+      tasks: [{ taskId: this.db.createId(), description: 'Hello!', label: 'yellow'}]
     })
   }
 
@@ -30,6 +30,7 @@ export class BoardService {
       .delete();
   }
 
+  // Update board name
   updateBoardName(boardId: string, title: string) {
     return this.db
       .collection('boards')
@@ -38,7 +39,7 @@ export class BoardService {
   }
 
   // Update board
-  updateTasks(boardId: string, tasks: Task[]) {
+  updateTasks(boardId: string | undefined, tasks: Task[] | undefined) {
     return this.db
       .collection('boards')
       .doc(boardId)

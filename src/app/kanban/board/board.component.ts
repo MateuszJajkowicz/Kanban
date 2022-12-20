@@ -1,3 +1,4 @@
+window.global = window
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -68,7 +69,8 @@ export class BoardComponent implements OnInit {
   }
 
   openTaskDialog(task?: Task, idx?: number): void {
-    const newTask = { label: 'purple' };
+    var randomstring = require("randomstring");
+    const newTask = { taskId: randomstring.generate(20), label: 'purple' };
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: '400px',
       data: task

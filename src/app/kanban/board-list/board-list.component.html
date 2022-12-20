@@ -1,3 +1,4 @@
+<mat-spinner class="spinner" *ngIf="isLoading"></mat-spinner>
 <div
   cdkDropList
   cdkDropListGroup
@@ -18,7 +19,7 @@
       mat-raised-button
       color="accent"
       cdkDragDisabled
-      (click)="openBoardDialog()"
+      (click)="openNewBoardDialog()"
     >
       New Board
     </button>

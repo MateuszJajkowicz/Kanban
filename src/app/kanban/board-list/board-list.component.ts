@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { BoardService } from '../board.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
-import { BoardDialogComponent } from '../dialogs/board-dialog.component';
+import { NewBoardDialogComponent } from '../dialogs/new-board-dialog.component';
 
 @Component({
   selector: 'app-board-list',
@@ -14,13 +14,14 @@ import { BoardDialogComponent } from '../dialogs/board-dialog.component';
 export class BoardListComponent implements OnInit, OnDestroy {
   boards: Board[];
   sub: Subscription;
+  isLoading: boolean = true;
 
   constructor(public boardService: BoardService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.sub = this.boardService
       .getUserBoards()
-      .subscribe(boards => this.boards = boards);
+      .subscribe(boards => { this.boards = boards, this.isLoading = false });
   }
 
   ngOnDestroy() {
@@ -38,8 +39,8 @@ export class BoardListComponent implements OnInit, OnDestroy {
     this.boardService.moveTask(previousContainer, previousTasks, newContainer, newTasks);
   }
 
-  openBoardDialog(): void {
-    const dialogRef = this.dialog.open(BoardDialogComponent, {
+  openNewBoardDialog(): void {
+    const dialogRef = this.dialog.open(NewBoardDialogComponent, {
       width: '400px',
       data: {}
     });

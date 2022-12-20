@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BoardService } from '../board.service';
+import { BoardService } from '../../services/board/board.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { toDate } from 'date-fns';
 
 @Component({
   selector: 'app-task-dialog',
-  styleUrls: ['./task-dialog.component.scss'],
+  styleUrls: ['./dialogs.component.scss'],
   template: `
     <h1 mat-dialog-title>Task</h1>
     <div mat-dialog-content class="content">

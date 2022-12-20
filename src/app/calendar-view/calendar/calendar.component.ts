@@ -3,7 +3,6 @@ import {
   OnInit,
   OnDestroy,
   Inject,
-  ViewEncapsulation,
 } from '@angular/core';
 import {
   isSameDay,
@@ -20,9 +19,9 @@ import {
 import { EventColor } from 'calendar-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
-import { BoardService } from 'src/app/kanban/board.service';
-import { Board, Task } from 'src/app/kanban/board.model';
-import { TaskDialogComponent } from 'src/app/kanban/dialogs/task-dialog.component';
+import { BoardService } from '../../services/board/board.service';
+import { Board, Task } from '../../models/board.model';
+import { TaskDialogComponent } from '../../shared/dialogs/task-dialog.component';
 
 const colors: Record<string, EventColor> = {
   red: {

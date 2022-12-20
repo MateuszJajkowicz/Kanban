@@ -13,8 +13,13 @@ import { BoardService } from '../board.service';
           placeholder="Task description"
           matInput
           [(ngModel)]="data.task.description"
+          cdkFocusInitial
+          cdkTextareaAutosize
         ></textarea>
       </mat-form-field>
+      <mat-error *ngIf="!data.task.description">
+        Task description is <strong>required</strong>
+      </mat-error>
       <br />
       <mat-button-toggle-group
         #group="matButtonToggleGroup"
@@ -28,8 +33,11 @@ import { BoardService } from '../board.service';
       </mat-button-toggle-group>
     </div>
     <div mat-dialog-actions>
-      <button mat-raised-button color="accent" [mat-dialog-close]="data" cdkFocusInitial>
+      <button mat-raised-button color="accent" [mat-dialog-close]="data" [disabled]="!data.task.description">
         {{ data.isNew ? 'Add Task' : 'Update Task' }}
+      </button>
+      <button mat-button (click)="onNoClick()">
+        Cancel
       </button>
 
       <app-delete-button

@@ -16,28 +16,66 @@
     (cdkDropListDropped)="taskDrop($event)"
   >
     <div *ngIf="isMobile; then thenBlock; else elseBlock"></div>
+    <!-- Mobiles -->
     <ng-template #thenBlock>
       <div
         cdkDrag
         [cdkDragStartDelay]="500"
         class="inner-card"
         *ngFor="let task of board.tasks; let i = index"
-        (click)="openTaskDialog(task, i)"
       >
         <mat-card [ngClass]="task.label">
-          {{ task.description }}
+          <div (click)="openTaskDialog(task, i)">
+            {{ task.description }}
+          </div>
+          <button class="expand" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openTaskDialog(task, i)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="handleTaskDone(task, i)">
+              <mat-icon>check_circle</mat-icon>
+              <span>Check as done</span>
+            </button>
+            <button mat-menu-item (click)="handleTaskDelete(task)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
         </mat-card>
       </div>
     </ng-template>
+    <!-- Desktop -->
     <ng-template #elseBlock>
       <div
         cdkDrag
         class="inner-card"
         *ngFor="let task of board.tasks; let i = index"
-        (click)="openTaskDialog(task, i)"
       >
         <mat-card [ngClass]="task.label">
-          {{ task.description }}
+          <div (click)="openTaskDialog(task, i)">
+            {{ task.description }}
+          </div>
+          <button class="expand" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openTaskDialog(task, i)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="handleTaskDone(task, i)">
+              <mat-icon>check_circle</mat-icon>
+              <span>Check as done</span>
+            </button>
+            <button mat-menu-item (click)="handleTaskDelete(task)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
         </mat-card>
       </div>
     </ng-template>
@@ -46,6 +84,6 @@
       <mat-icon>add</mat-icon>
     </button>
 
-    <app-delete-button (delete)="handleDelete()"></app-delete-button>
+    <app-delete-button (delete)="handleBoardDelete()"></app-delete-button>
   </div>
 </mat-card>

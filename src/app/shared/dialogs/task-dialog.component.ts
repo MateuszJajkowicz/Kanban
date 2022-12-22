@@ -30,7 +30,7 @@ import { toDate } from 'date-fns';
           <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="handleRangeChange()">
           <input matEndDate formControlName="end" placeholder="End date" (dateChange)="handleRangeChange()">
         </mat-date-range-input>
-        <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+        <mat-hint>DD/MM/YYYY - DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
         <mat-date-range-picker #rangePicker>
           <mat-date-range-picker-actions>

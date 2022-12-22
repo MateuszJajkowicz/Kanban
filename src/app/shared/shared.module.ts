@@ -46,6 +46,7 @@ const modules = [
   MatNativeDateModule,
   MatDialogModule,
   MatButtonToggleModule,
+  MatMenuModule,
 ];
 
 @NgModule({

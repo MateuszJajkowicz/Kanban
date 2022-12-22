@@ -23,6 +23,12 @@
 .inner-card {
   margin: 5px 0;
   cursor: pointer;
+
+  .expand{
+    float: right;
+    margin-top: -1.8rem;
+    margin-right: -1.05rem;
+  }
 }
 
 .cdk-drag-animating {

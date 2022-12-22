@@ -94,7 +94,18 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  handleDelete() {
+  handleBoardDelete() {
     this.boardService.deleteBoard(this.board.id);
+  }
+
+  handleTaskDone(task: Task, idx: number) {
+    task.label = 'gray';
+    const update = this.board.tasks;
+    update.splice(idx, 1, task);
+    this.boardService.updateTasks(this.board.id, this.board.tasks);
+  }
+
+  handleTaskDelete(task: Task) {
+    this.boardService.deleteTask(this.board.id, task);
   }
 }

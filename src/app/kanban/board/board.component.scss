@@ -15,18 +15,30 @@
   margin: 0px 0px 0px -1rem;
 
   .title {
-      width: 17rem;
-      cursor: pointer;
-    }
+    width: 17rem;
+    cursor: pointer;
+  }
+
+  .sort-menu{
+    margin: -0.5rem 0rem 0rem -4rem;
+  }
 }
 
 .inner-card {
   margin: 5px 0;
   cursor: pointer;
 
-  .expand{
+  .mat-card {
+    padding: 0px 16px 0px 16px !important;
+  }
+
+  .task-description{
+    padding: 16px 0px 16px 0px;
+  }
+
+  .task-menu{
     float: right;
-    margin-top: -1.8rem;
+    margin-top: -2.8rem;
     margin-right: -1.05rem;
   }
 }

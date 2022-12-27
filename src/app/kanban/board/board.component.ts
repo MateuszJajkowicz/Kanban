@@ -108,4 +108,14 @@ export class BoardComponent implements OnInit {
   handleTaskDelete(task: Task) {
     this.boardService.deleteTask(this.board.id, task);
   }
+
+  filterByDate(asc = 1) {
+    var tasksWithDate = this.board.tasks
+      .filter((task: { startDate: any; endDate: any; }) => task.startDate != undefined && task.endDate != undefined)
+      .sort((a: any, b: any) => (asc) * (a.startDate - b.startDate));
+    var tasksWithoutDate = this.board.tasks
+      .filter((task: { startDate: any; endDate: any; }) => task.startDate == undefined && task.endDate == undefined);
+    this.board.tasks = [...tasksWithDate, ...tasksWithoutDate]
+    this.boardService.updateTasks(this.board.id, this.board.tasks);
+  }
 }

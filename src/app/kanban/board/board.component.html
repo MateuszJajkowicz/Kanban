@@ -4,6 +4,19 @@
     <mat-card-title class="title" (click)="openBoardDialog(board.title)">
       {{ board.title }}
     </mat-card-title>
+    <button class="sort-menu" mat-icon-button [matMenuTriggerFor]="sortMenu">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    <mat-menu #sortMenu="matMenu">
+      <button mat-menu-item (click)="filterByDate(-1)">
+        <mat-icon>arrow_downward</mat-icon>
+        <span>Sort by date desc.</span>
+      </button>
+      <button mat-menu-item (click)="filterByDate(1)">
+        <mat-icon>arrow_upward</mat-icon>
+        <span>Sort by date asc.</span>
+      </button>
+    </mat-menu>
     <ng-content></ng-content>
   </mat-card-header>
 
@@ -25,13 +38,17 @@
         *ngFor="let task of board.tasks; let i = index"
       >
         <mat-card [ngClass]="task.label">
-          <div (click)="openTaskDialog(task, i)">
+          <div class="task-description" (click)="openTaskDialog(task, i)">
             {{ task.description }}
           </div>
-          <button class="expand" mat-icon-button [matMenuTriggerFor]="menu">
+          <button
+            class="task-menu"
+            mat-icon-button
+            [matMenuTriggerFor]="taskMenu"
+          >
             <mat-icon>more_vert</mat-icon>
           </button>
-          <mat-menu #menu="matMenu">
+          <mat-menu #taskMenu="matMenu">
             <button mat-menu-item (click)="openTaskDialog(task, i)">
               <mat-icon>edit</mat-icon>
               <span>Edit</span>
@@ -56,10 +73,10 @@
         *ngFor="let task of board.tasks; let i = index"
       >
         <mat-card [ngClass]="task.label">
-          <div (click)="openTaskDialog(task, i)">
+          <div class="task-description" (click)="openTaskDialog(task, i)">
             {{ task.description }}
           </div>
-          <button class="expand" mat-icon-button [matMenuTriggerFor]="menu">
+          <button class="task-menu" mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">

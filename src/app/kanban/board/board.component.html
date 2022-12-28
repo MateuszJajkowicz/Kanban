@@ -16,6 +16,14 @@
         <mat-icon>arrow_upward</mat-icon>
         <span>Sort by date asc.</span>
       </button>
+      <button mat-menu-item (click)="filterByPriority(-1)">
+        <mat-icon>arrow_downward</mat-icon>
+        <span>Sort by priority desc.</span>
+      </button>
+      <button mat-menu-item (click)="filterByPriority(1)">
+        <mat-icon>arrow_upward</mat-icon>
+        <span>Sort by priority asc.</span>
+      </button>
     </mat-menu>
     <ng-content></ng-content>
   </mat-card-header>

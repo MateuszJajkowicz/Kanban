@@ -16,6 +16,7 @@ import { BoardDialogComponent } from '../dialogs/board-dialog.component';
 export class BoardComponent implements OnInit {
 
   isMobile: boolean
+  sortOrder = ['purple', 'blue', 'green', 'yellow', 'red', 'grey'];
   @Input() board: any = [];
   @Output() taskMoved = new EventEmitter<{ previousContainer: string; newContainer: string }>();
 
@@ -116,6 +117,14 @@ export class BoardComponent implements OnInit {
     var tasksWithoutDate = this.board.tasks
       .filter((task: { startDate: any; endDate: any; }) => task.startDate == undefined && task.endDate == undefined);
     this.board.tasks = [...tasksWithDate, ...tasksWithoutDate]
+    this.boardService.updateTasks(this.board.id, this.board.tasks);
+  }
+
+  filterByPriority(asc = 1) {
+    var tasks = this.board.tasks;
+    tasks.sort((a: { label: string; }, b: { label: any; }) =>
+      (asc) * (this.sortOrder.indexOf(a.label) - this.sortOrder.indexOf(b.label)));
+    this.board.tasks = [...tasks]
     this.boardService.updateTasks(this.board.id, this.board.tasks);
   }
 }

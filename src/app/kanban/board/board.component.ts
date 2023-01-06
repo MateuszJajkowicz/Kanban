@@ -2,8 +2,8 @@ window.global = window
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Task } from '../../models/board.model';
-import { BoardService } from '../../services/board/board.service';
+import { Task } from '../../shared/models/board.model';
+import { BoardService } from '../../shared/services/board/board.service';
 import { TaskDialogComponent } from '../../shared/dialogs/task-dialog.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { BoardDialogComponent } from '../dialogs/board-dialog.component';

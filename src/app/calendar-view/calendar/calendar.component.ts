@@ -19,8 +19,8 @@ import {
 import { EventColor } from 'calendar-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
-import { BoardService } from '../../services/board/board.service';
-import { Board, Task } from '../../models/board.model';
+import { BoardService } from '../../shared/services/board/board.service';
+import { Board, Task } from '../../shared/models/board.model';
 import { TaskDialogComponent } from '../../shared/dialogs/task-dialog.component';
 
 const colors: Record<string, EventColor> = {
@@ -131,7 +131,7 @@ export class CalendarComponent  implements OnInit, OnDestroy{
           board.tasks?.forEach(task => {
             task.boardId = board.id;
           });
-          this.tasks = this.tasks
+          this.tasks = (this.tasks || [])
             .concat(board.tasks)
             .filter(task => task.startDate != undefined && task.endDate != undefined);
         });

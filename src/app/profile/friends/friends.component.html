@@ -1,0 +1,53 @@
+<mat-spinner class="spinner" *ngIf="isLoading"></mat-spinner>
+<div class="box">
+  <mat-card>
+    <mat-icon class="back-arrow" (click)="changePageToProfile(false)"
+      >arrow_back</mat-icon
+    >
+    <mat-form-field class="friend-input">
+      <input
+        #inputField
+        type="text"
+        placeholder="Type name"
+        aria-label="Name"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <button mat-stroked-button (click)="handleAddingAFriend()">
+      Add as a friend
+    </button>
+    <div class="outer-card">
+      <div class="inner-card" *ngFor="let friend of friends">
+        <mat-card>
+          <img matCardImage [src]="friend.photoURL" />
+          <div class="friend-name">
+            {{ friend.name }}
+          </div>
+          <button
+            class="friend-menu"
+            mat-icon-button
+            [matMenuTriggerFor]="friendMenu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #friendMenu="matMenu">
+            <button mat-menu-item (click)="handleFriendDelete(friend)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
+</div>

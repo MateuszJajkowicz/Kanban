@@ -98,6 +98,11 @@ a {
   margin-bottom: -8px!important;
 }
 
+mat-icon:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
 .dark-theme {
   // First define some global color variables for your app, these are just for the demo, they can be anything you like
   $bg-dark-primary: #1f262d;

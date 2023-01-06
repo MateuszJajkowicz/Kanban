@@ -1,0 +1,32 @@
+<mat-spinner class="spinner" *ngIf="isLoading"></mat-spinner>
+<div class="box" *ngIf="userData && !isFriendsPage">
+  <mat-card>
+    <div class="title">
+      <h1>Profile</h1>
+    </div>
+    <div class="image">
+      <img matCardImage [src]="userData.photoURL" />
+      <p>
+        Logged in as <strong>{{ userData.email }}</strong>
+      </p>
+      <button mat-stroked-button (click)="logout()">Logout</button>
+    </div>
+    <div class="name">
+      <mat-form-field class="input-style">
+        <input matInput placeholder="Name" [(ngModel)]="userData.name" />
+      </mat-form-field>
+      <button mat-stroked-button class="button-update" (click)="handleUpdate()">
+        Update
+      </button>
+      <br />
+      <button
+        mat-stroked-button
+        class="button-friends"
+        (click)="handlePageChange()"
+      >
+        Friends
+      </button>
+    </div>
+  </mat-card>
+</div>
+<app-friends *ngIf="isFriendsPage" [userData]="userData" (isFriendsPage)="changePagetoProfile($event)"></app-friends>

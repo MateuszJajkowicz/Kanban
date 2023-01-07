@@ -65,6 +65,10 @@
               <mat-icon>check_circle</mat-icon>
               <span>Check as done</span>
             </button>
+            <button mat-menu-item (click)="handleSharingWithFriend(task)">
+              <mat-icon>share</mat-icon>
+              <span>Share with friend</span>
+            </button>
             <button mat-menu-item (click)="handleTaskDelete(task)">
               <mat-icon color="warn">delete</mat-icon>
               <span>Delete</span>
@@ -95,6 +99,10 @@
             <button mat-menu-item (click)="handleTaskDone(task, i)">
               <mat-icon>check_circle</mat-icon>
               <span>Check as done</span>
+            </button>
+            <button mat-menu-item (click)="handleSharingWithFriend(task)">
+              <mat-icon>share</mat-icon>
+              <span>Share with friend</span>
             </button>
             <button mat-menu-item (click)="handleTaskDelete(task)">
               <mat-icon color="warn">delete</mat-icon>

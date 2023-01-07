@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore/';
 import firebase from 'firebase/compat/app';
 import { switchMap } from 'rxjs/operators';
 import { Board, Task} from '../../models/board.model';
+import { Friend } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,21 @@ export class BoardService {
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) { }
 
   // Creates a new board for the current user
-  async createBoard(data: Board) {
+  async createBoard(data: Board, friendId?: string, sharedTask?: Task) {
     const user = await this.afAuth.currentUser;
     return this.db.collection('boards').add({
       ...data,
-      uid: user?.uid,
-      tasks: [{ taskId: this.db.createId(), description: 'Hello!', label: 'yellow'}]
+      uid: (friendId != undefined) ? friendId : user?.uid,
+      tasks: (sharedTask != undefined) ? [sharedTask] : [{ taskId: this.db.createId(), description: 'Hello!', label: 'yellow'}]
     })
+  }
+
+  // Share task with friend
+  shareTask(selectedFriend: Friend, task: Task) {
+    this.createBoard({
+      title: 'Shared Board',
+      priority: 9999
+    }, selectedFriend.uid, task);
   }
 
   // Delete board

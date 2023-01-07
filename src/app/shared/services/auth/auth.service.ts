@@ -20,7 +20,6 @@ export class AuthService {
         switchMap(user => {
             // Logged in
           if (user) {
-            console.log(user)
             return this.db.doc<User>(`users/${user.uid}`).valueChanges();
           } else {
             // Logged out
@@ -38,7 +37,6 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        console.log(result.user);
         this.createUserData(result.user);
         this.router.navigate(['/', 'kanban']);
       })

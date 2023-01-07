@@ -73,14 +73,12 @@ export class FriendsComponent implements OnInit, OnDestroy {
   handleAddingAFriend() {
     var newfriend = this.strangers.map(person => { return <Friend>{ uid: person.uid, name: person.name, photoURL: person.photoURL }; })
       .filter(person => person.name == this.myControl.value);
-    console.log(newfriend);
     this.friends = (this.friends || []).concat(newfriend);
     this.profileService.addFriend(this.friends);
     this.myControl.setValue('');
   }
 
   handleFriendDelete(friend: Friend) {
-    console.log(friend)
     this.profileService.deleteFriend(this.userData.uid, friend);
   }
 

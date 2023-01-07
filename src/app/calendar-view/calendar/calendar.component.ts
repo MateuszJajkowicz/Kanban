@@ -198,10 +198,6 @@ export class CalendarComponent  implements OnInit, OnDestroy{
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    // console.log(action);
-    // console.log(event);
-    // this.dialog.open(this.modalContent, { size: 'lg' });
-    // this.openModal( this.modalData);
     this.openTaskDialog(event);
   }
 

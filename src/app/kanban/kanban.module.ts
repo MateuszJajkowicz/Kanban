@@ -4,12 +4,9 @@ import { KanbanRoutingModule } from './kanban-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BoardListComponent } from './board-list/board-list.component';
 import { BoardComponent } from './board/board.component';
 import { NewBoardDialogComponent } from './dialogs/new-board-dialog.component';
-import { TaskDialogComponent } from './dialogs/task-dialog.component';
 import { BoardDialogComponent } from './dialogs/board-dialog.component';
 
 
@@ -18,7 +15,6 @@ import { BoardDialogComponent } from './dialogs/board-dialog.component';
     BoardListComponent,
     BoardComponent,
     NewBoardDialogComponent,
-    TaskDialogComponent,
     BoardDialogComponent
   ],
   imports: [
@@ -27,8 +23,6 @@ import { BoardDialogComponent } from './dialogs/board-dialog.component';
     SharedModule,
     FormsModule,
     DragDropModule,
-    MatDialogModule,
-    MatButtonToggleModule,
     ReactiveFormsModule,
   ],
 })

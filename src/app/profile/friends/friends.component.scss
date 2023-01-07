@@ -1,0 +1,95 @@
+.spinner {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.spinner:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.back-arrow{
+  float: left;
+  cursor: pointer;
+}
+
+.box {
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.friend-input{
+  margin-right: 1rem;
+}
+
+mat-card {
+  display: block;
+  min-width: 350px;
+  max-width: 500px;
+  width: 100%;
+  min-height: 150px;
+  max-height: 310px;
+  height: 100%;
+}
+
+.outer-card{
+  height: 220px;
+  overflow-y: scroll;
+}
+
+.inner-card {
+  width: fit-content;
+  margin: 5px 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  .mat-card {
+    background-color: #353535;
+    min-width: 15rem;
+    max-width: 20rem;
+    width: 0%;
+    min-height: 4rem;
+    max-height: 5rem;
+    height: 0%;
+  }
+
+  .friend-name {
+    padding-top: 0.5rem;
+  }
+
+  .friend-menu {
+    float: right;
+    margin-top: -2rem;
+    margin-right: -1.05rem;
+    cursor: pointer;
+  }
+}
+
+img {
+  margin: 0.1rem 0.1rem 0.1rem 0.1rem!important;
+  float: left;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50% !important;
+}
+
+:host {
+  text-align: center;
+}

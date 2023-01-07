@@ -2,9 +2,9 @@ window.global = window
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Task } from '../board.model';
-import { BoardService } from '../board.service';
-import { TaskDialogComponent } from '../dialogs/task-dialog.component';
+import { Task } from '../../shared/models/board.model';
+import { BoardService } from '../../shared/services/board/board.service';
+import { TaskDialogComponent } from '../../shared/dialogs/task-dialog.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { BoardDialogComponent } from '../dialogs/board-dialog.component';
 
@@ -16,6 +16,7 @@ import { BoardDialogComponent } from '../dialogs/board-dialog.component';
 export class BoardComponent implements OnInit {
 
   isMobile: boolean
+  sortOrder = ['purple', 'blue', 'green', 'yellow', 'red', 'grey'];
   @Input() board: any = [];
   @Output() taskMoved = new EventEmitter<{ previousContainer: string; newContainer: string }>();
 
@@ -94,7 +95,36 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  handleDelete() {
+  handleBoardDelete() {
     this.boardService.deleteBoard(this.board.id);
+  }
+
+  handleTaskDone(task: Task, idx: number) {
+    task.label = 'gray';
+    const update = this.board.tasks;
+    update.splice(idx, 1, task);
+    this.boardService.updateTasks(this.board.id, this.board.tasks);
+  }
+
+  handleTaskDelete(task: Task) {
+    this.boardService.deleteTask(this.board.id, task);
+  }
+
+  filterByDate(asc = 1) {
+    var tasksWithDate = this.board.tasks
+      .filter((task: { startDate: any; endDate: any; }) => task.startDate != undefined && task.endDate != undefined)
+      .sort((a: any, b: any) => (asc) * (a.startDate - b.startDate));
+    var tasksWithoutDate = this.board.tasks
+      .filter((task: { startDate: any; endDate: any; }) => task.startDate == undefined && task.endDate == undefined);
+    this.board.tasks = [...tasksWithDate, ...tasksWithoutDate]
+    this.boardService.updateTasks(this.board.id, this.board.tasks);
+  }
+
+  filterByPriority(asc = 1) {
+    var tasks = this.board.tasks;
+    tasks.sort((a: { label: string; }, b: { label: any; }) =>
+      (asc) * (this.sortOrder.indexOf(a.label) - this.sortOrder.indexOf(b.label)));
+    this.board.tasks = [...tasks]
+    this.boardService.updateTasks(this.board.id, this.board.tasks);
   }
 }

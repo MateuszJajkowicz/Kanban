@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BoardService } from '../board.service';
+import { BoardService } from '../services/board/board.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { toDate } from 'date-fns';
 
 @Component({
   selector: 'app-task-dialog',
-  styleUrls: ['./task-dialog.component.scss'],
+  styleUrls: ['./dialogs.component.scss'],
   template: `
     <h1 mat-dialog-title>Task</h1>
     <div mat-dialog-content class="content">
@@ -30,7 +30,7 @@ import { toDate } from 'date-fns';
           <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="handleRangeChange()">
           <input matEndDate formControlName="end" placeholder="End date" (dateChange)="handleRangeChange()">
         </mat-date-range-input>
-        <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+        <mat-hint>DD/MM/YYYY - DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
         <mat-date-range-picker #rangePicker>
           <mat-date-range-picker-actions>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -8,9 +9,15 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor(public afAuth: AngularFireAuth) { }
+  constructor(private router: Router, public afAuth: AngularFireAuth) { }
 
   ngOnInit(): void {
+    this.checkAuthState();
   }
 
+  checkAuthState() {
+    if (this.afAuth.authState) {
+      this.router.navigate(['/profile']);
+    }
+  }
 }

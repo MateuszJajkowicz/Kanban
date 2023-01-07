@@ -3,7 +3,6 @@ import {
   OnInit,
   OnDestroy,
   Inject,
-  ViewEncapsulation,
 } from '@angular/core';
 import {
   isSameDay,
@@ -20,9 +19,9 @@ import {
 import { EventColor } from 'calendar-utils';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
-import { BoardService } from 'src/app/kanban/board.service';
-import { Board, Task } from 'src/app/kanban/board.model';
-import { TaskDialogComponent } from 'src/app/kanban/dialogs/task-dialog.component';
+import { BoardService } from '../../shared/services/board/board.service';
+import { Board, Task } from '../../shared/models/board.model';
+import { TaskDialogComponent } from '../../shared/dialogs/task-dialog.component';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -132,7 +131,7 @@ export class CalendarComponent  implements OnInit, OnDestroy{
           board.tasks?.forEach(task => {
             task.boardId = board.id;
           });
-          this.tasks = this.tasks
+          this.tasks = (this.tasks || [])
             .concat(board.tasks)
             .filter(task => task.startDate != undefined && task.endDate != undefined);
         });
@@ -199,10 +198,6 @@ export class CalendarComponent  implements OnInit, OnDestroy{
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    // console.log(action);
-    // console.log(event);
-    // this.dialog.open(this.modalContent, { size: 'lg' });
-    // this.openModal( this.modalData);
     this.openTaskDialog(event);
   }
 

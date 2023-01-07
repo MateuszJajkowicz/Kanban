@@ -17,13 +17,19 @@ import { ShellComponent } from './shell/shell.component';
 import { DeleteButtonComponent } from './delete-button/delete-button.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TaskDialogComponent } from './dialogs/task-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-const components = [ShellComponent, DeleteButtonComponent];
+const components = [ShellComponent, DeleteButtonComponent, TaskDialogComponent];
 
 const modules = [
   CommonModule,
   LayoutModule,
   RouterModule,
+  FormsModule,
+  ReactiveFormsModule,
   MatButtonModule,
   MatToolbarModule,
   MatIconModule,
@@ -38,6 +44,9 @@ const modules = [
   MatProgressSpinnerModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatDialogModule,
+  MatButtonToggleModule,
+  MatMenuModule,
 ];
 
 @NgModule({

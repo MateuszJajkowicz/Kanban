@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { SnackService } from '../services/snack.service';
+import { SnackService } from '../shared/services/snack/snack.service';
 import { map, Observable, tap } from 'rxjs';
 
 @Injectable({

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
 import { AuthGuard } from './user/auth.guard';
 
 const routes: Routes = [
@@ -10,6 +9,8 @@ const routes: Routes = [
     path: 'kanban', loadChildren: () => import('./kanban/kanban.module').then(m => m.KanbanModule), canActivate: [AuthGuard]
   },{
     path: 'calendar', loadChildren: () => import('./calendar-view/calendar-view.module').then(m => m.CalendarViewModule), canActivate: [AuthGuard]
+  },{
+    path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), canActivate: [AuthGuard]
   },{
     path: '**', loadChildren: () => import('./kanban/kanban.module').then(m => m.KanbanModule), canActivate: [AuthGuard]
   },

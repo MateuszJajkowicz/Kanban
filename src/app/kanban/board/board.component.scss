@@ -15,14 +15,38 @@
   margin: 0px 0px 0px -1rem;
 
   .title {
-      width: 17rem;
-      cursor: pointer;
-    }
+    width: 13.5rem;
+    cursor: pointer;
+  }
+
+  .sort-menu{
+    margin: -0.5rem 0rem 0rem -1rem;
+  }
+
+  mat-icon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
 }
 
 .inner-card {
   margin: 5px 0;
-  cursor: pointer;
+
+  .mat-card {
+    padding: 0px 16px 0px 0px !important;
+  }
+
+  .task-description{
+    padding: 16px;
+    cursor: pointer;
+  }
+
+  .task-menu{
+    float: right;
+    margin-top: -2.8rem;
+    margin-right: -1.05rem;
+    cursor: pointer;
+  }
 }
 
 .cdk-drag-animating {

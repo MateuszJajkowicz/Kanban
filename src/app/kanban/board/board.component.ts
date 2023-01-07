@@ -7,6 +7,7 @@ import { BoardService } from '../../shared/services/board/board.service';
 import { TaskDialogComponent } from '../../shared/dialogs/task-dialog.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { BoardDialogComponent } from '../dialogs/board-dialog.component';
+import { SharingDialogComponent } from '../dialogs/sharing-dialog.component';
 
 @Component({
   selector: 'app-board',
@@ -108,6 +109,20 @@ export class BoardComponent implements OnInit {
 
   handleTaskDelete(task: Task) {
     this.boardService.deleteTask(this.board.id, task);
+  }
+
+  handleSharingWithFriend(task: Task) {
+    const dialogRef = this.dialog.open(SharingDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(selectedFriend => {
+      if (selectedFriend) {
+        console.log(task);
+        console.log(selectedFriend);
+        this.boardService.shareTask(selectedFriend, task);
+      }
+    });
   }
 
   filterByDate(asc = 1) {

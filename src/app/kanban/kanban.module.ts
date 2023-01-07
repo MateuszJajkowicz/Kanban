@@ -8,6 +8,7 @@ import { BoardListComponent } from './board-list/board-list.component';
 import { BoardComponent } from './board/board.component';
 import { NewBoardDialogComponent } from './dialogs/new-board-dialog.component';
 import { BoardDialogComponent } from './dialogs/board-dialog.component';
+import { SharingDialogComponent } from './dialogs/sharing-dialog.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { BoardDialogComponent } from './dialogs/board-dialog.component';
     BoardListComponent,
     BoardComponent,
     NewBoardDialogComponent,
-    BoardDialogComponent
+    BoardDialogComponent,
+    SharingDialogComponent
   ],
   imports: [
     CommonModule,

@@ -8,6 +8,7 @@ import { TaskDialogComponent } from '../../shared/dialogs/task-dialog.component'
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { BoardDialogComponent } from '../dialogs/board-dialog.component';
 import { SharingDialogComponent } from '../dialogs/sharing-dialog.component';
+import { SnackService } from 'src/app/shared/services/snack/snack.service';
 
 @Component({
   selector: 'app-board',
@@ -24,6 +25,7 @@ export class BoardComponent implements OnInit {
   constructor(
     private deviceService: DeviceDetectorService,
     private boardService: BoardService,
+    private snackService: SnackService,
     public dialog: MatDialog,
   ) { }
 
@@ -121,6 +123,7 @@ export class BoardComponent implements OnInit {
         console.log(task);
         console.log(selectedFriend);
         this.boardService.shareTask(selectedFriend, task);
+        this.snackService.success('Shared with a friend successfully');
       }
     });
   }

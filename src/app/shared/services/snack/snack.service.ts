@@ -24,4 +24,10 @@ export class SnackService {
       )
       .subscribe();
   }
+
+  success(text: string) {
+    this.snackBar.open(text, 'OK', {
+      duration: 5000,
+    });
+  }
 }

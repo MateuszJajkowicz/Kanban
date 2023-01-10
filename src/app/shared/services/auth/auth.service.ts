@@ -37,7 +37,9 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        this.createUserData(result.user);
+        if (result.additionalUserInfo?.isNewUser) {
+          this.createUserData(result.user);
+        }
         this.router.navigate(['/', 'kanban']);
       })
       .catch((error) => {

@@ -8,7 +8,11 @@ import { toDate } from 'date-fns';
   selector: 'app-task-dialog',
   styleUrls: ['./dialogs.component.scss'],
   template: `
-    <h1 mat-dialog-title>Task</h1>
+    <h1 mat-dialog-title class="task-title">Task</h1>
+    <app-delete-button class="delete-button"
+      (delete)="handleTaskDelete()"
+      *ngIf="!data.isNew"
+    ></app-delete-button>
     <div mat-dialog-content class="content">
       <mat-form-field>
         <textarea
@@ -24,7 +28,7 @@ import { toDate } from 'date-fns';
       </mat-error>
 
       <br/>
-      <mat-form-field>
+      <mat-form-field class="date-input">
         <mat-label>Enter a date range</mat-label>
         <mat-date-range-input [formGroup]="range" [rangePicker]="rangePicker">
           <input matStartDate formControlName="start" placeholder="Start date" (dateChange)="handleRangeChange()">
@@ -42,7 +46,9 @@ import { toDate } from 'date-fns';
         <mat-error *ngIf="data.task.endDate == null">Invalid end date</mat-error>
       </mat-form-field>
       <br/>
-      <mat-button-toggle-group class="priority-toggle"
+      <span class="priority">Priority</span>
+      <br>
+      <mat-button-toggle-group
         #group="matButtonToggleGroup"
         [(ngModel)]="data.task.label"
       >
@@ -62,10 +68,6 @@ import { toDate } from 'date-fns';
         Cancel
       </button>
 
-      <app-delete-button
-        (delete)="handleTaskDelete()"
-        *ngIf="!data.isNew"
-      ></app-delete-button>
     </div>
   `
 })

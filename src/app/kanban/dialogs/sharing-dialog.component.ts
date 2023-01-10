@@ -9,17 +9,10 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./sharing-dialog.component.scss'],
   template: `
     <mat-spinner class="spinner" *ngIf="isLoading"></mat-spinner>
-    <!-- <mat-selection-list #shoes [multiple]="false">
-      <mat-list-option *ngFor="let friend of friends" [value]="friend">
-        <mat-card >
-          <img matCardImage [src]="friend.photoURL" />
-          <div class="friend-name">
-            {{ friend.name }}
-          </div>
-        </mat-card>
-      </mat-list-option>
-    </mat-selection-list> -->
-    <div class="outer-card">
+    <div *ngIf="friends == undefined">
+      <span>You don't have friends. In order to add friends visit your profile.</span>
+    </div>
+    <div class="outer-card" *ngIf="friends">
       <div class="inner-card" *ngFor="let friend of friends" (click)="handleFriendSelection(friend)">
         <mat-card [class.highlight]="selectedFriend==friend">
           <img matCardImage [src]="friend.photoURL" />
@@ -30,7 +23,7 @@ import { MatDialogRef } from '@angular/material/dialog';
       </div>
     </div>
     <div mat-dialog-actions>
-      <button mat-raised-button color="accent" [mat-dialog-close]="selectedFriend">
+      <button mat-raised-button color="accent" [mat-dialog-close]="selectedFriend" [disabled]="!selectedFriend">
         Choose
       </button>
       <button mat-button (click)="onNoClick()">

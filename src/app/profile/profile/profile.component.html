@@ -5,7 +5,7 @@
       <h1>Profile</h1>
     </div>
     <div class="image">
-      <img matCardImage [src]="userData.photoURL" />
+      <img *ngIf="userData.photoURL" matCardImage [src]="userData.photoURL" />
       <p>
         Logged in as <strong>{{ userData.email }}</strong>
       </p>
@@ -29,4 +29,8 @@
     </div>
   </mat-card>
 </div>
-<app-friends *ngIf="isFriendsPage" [userData]="userData" (isFriendsPage)="changePagetoProfile($event)"></app-friends>
+<app-friends
+  *ngIf="isFriendsPage"
+  [userData]="userData"
+  (isFriendsPage)="changePagetoProfile($event)"
+></app-friends>

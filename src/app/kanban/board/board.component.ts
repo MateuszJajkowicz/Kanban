@@ -120,8 +120,6 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(selectedFriend => {
       if (selectedFriend) {
-        console.log(task);
-        console.log(selectedFriend);
         this.boardService.shareTask(selectedFriend, task);
         this.snackService.success('Shared with a friend successfully');
       }

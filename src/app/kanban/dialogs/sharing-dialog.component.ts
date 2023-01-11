@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Friend } from 'src/app/shared/models/user.model';
 import { ProfileService } from 'src/app/shared/services/profile/profile.service';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ import { MatDialogRef } from '@angular/material/dialog';
     <div class="outer-card" *ngIf="friends">
       <div class="inner-card" *ngFor="let friend of friends" (click)="handleFriendSelection(friend)">
         <mat-card [class.highlight]="selectedFriend==friend">
-          <img matCardImage [src]="friend.photoURL" />
+          <img *ngIf="friend.photoURL" matCardImage [src]="friend.photoURL" />
           <div class="friend-name">
             {{ friend.name }}
           </div>

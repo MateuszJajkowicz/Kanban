@@ -4,14 +4,14 @@
     <div class="title">
       <h1>Profile</h1>
     </div>
-    <div class="image">
+    <div class="column-1">
       <img *ngIf="userData.photoURL" matCardImage [src]="userData.photoURL" />
-      <p>
+      <p class="p-style">
         Logged in as <strong>{{ userData.email }}</strong>
       </p>
       <button mat-stroked-button (click)="logout()">Logout</button>
     </div>
-    <div class="name">
+    <div class="column-2">
       <mat-form-field class="input-style">
         <input matInput placeholder="Name" [(ngModel)]="userData.name" />
       </mat-form-field>

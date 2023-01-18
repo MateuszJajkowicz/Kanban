@@ -101,7 +101,7 @@ export class EmailLoginComponent implements OnInit {
         this.router.navigate(['/', 'kanban']);
       }
       if (this.isSignup) {
-        var photoURL = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png';
+        var photoURL = 'https://api.dicebear.com/5.x/avataaars-neutral/svg?seed='+name;
         var uid: string;
         await this.afAuth.createUserWithEmailAndPassword(email, password);
         await this.afAuth.authState.subscribe(result => {

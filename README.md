@@ -1,30 +1,79 @@
 # Kanban
 
-Check it yourself at [https://mj-kanban.web.app/](https://mj-kanban.web.app/). </br>
-Do you have any advices? Please contact me: [mateusz.jajkowicz@gmail.com](mailto:mateusz.jajkowicz@gmail.com)
+<h3>You can check it online at https://mj-kanban.web.app/ </br>
+You can login as:
+  <ul>
+     <li>
+        login: test@example.com</br>
+        password: 123456
+     </li>
+     <li>
+        Or just use your google account
+     </li>
+  </ul>
+</h3>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.7.
+> Kanban app inspired by Trello built with the Angular & Firebase.
 
-## Development server
+![screenshot](https://github.com/MateuszJajkowicz/Kanban/blob/master/screenshots/kanban_screenshot_1.png)
+![screenshot](https://github.com/MateuszJajkowicz/Kanban/blob/master/screenshots/kanban_screenshot_2.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- Angular 14.x + Firebase
+- Installable PWA
+- OAuth and Email/Password Signup with Firebase
+- Drag & drop boards Kanban with Firestore
+- Calendar - if any task has a date assigned to it, it will be displayed in calendar
+- Profile Screen
+- Adding friends
+- Sharing tasks with friends
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Usage
 
-## Build
+### Create a project at https://firebase.google.com/ and grab your web config
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Add the config to your Angular environment
 
-## Running unit tests
+Create a environments folder and to files (environment.ts and environment.prod.ts) inside this folder and add the following
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+In environment.ts:
+```
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  },
+};
+```
 
-## Running end-to-end tests
+In environment.prod.ts:
+```
+export const environment = {
+  production: true,
+  firebase: {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  },
+};
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Install Dependencies
 
-## Further help
+```
+npm install
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Run
+
+```
+# Run `ng serve`

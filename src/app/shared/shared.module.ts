@@ -21,6 +21,7 @@ import { TaskDialogComponent } from './dialogs/task-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const components = [ShellComponent, DeleteButtonComponent, TaskDialogComponent];
 
@@ -47,6 +48,7 @@ const modules = [
   MatDialogModule,
   MatButtonToggleModule,
   MatMenuModule,
+  MatTooltipModule,
 ];
 
 @NgModule({

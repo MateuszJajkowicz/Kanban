@@ -4,14 +4,14 @@
     <div class="title">
       <h1>Profile</h1>
     </div>
-    <div class="image">
-      <img matCardImage [src]="userData.photoURL" />
-      <p>
+    <div class="column-1">
+      <img *ngIf="userData.photoURL" matCardImage [src]="userData.photoURL" />
+      <p class="p-style">
         Logged in as <strong>{{ userData.email }}</strong>
       </p>
       <button mat-stroked-button (click)="logout()">Logout</button>
     </div>
-    <div class="name">
+    <div class="column-2">
       <mat-form-field class="input-style">
         <input matInput placeholder="Name" [(ngModel)]="userData.name" />
       </mat-form-field>
@@ -29,4 +29,8 @@
     </div>
   </mat-card>
 </div>
-<app-friends *ngIf="isFriendsPage" [userData]="userData" (isFriendsPage)="changePagetoProfile($event)"></app-friends>
+<app-friends
+  *ngIf="isFriendsPage"
+  [userData]="userData"
+  (isFriendsPage)="changePagetoProfile($event)"
+></app-friends>

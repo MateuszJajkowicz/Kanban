@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { User, Friend } from '../../models/user.model';
 import { switchMap } from 'rxjs';
 import firebase from 'firebase/compat/app';
@@ -11,6 +11,22 @@ import firebase from 'firebase/compat/app';
 export class ProfileService {
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) { }
+
+  createUserData(user: any) {
+    // Sets user data to firestore on login
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
+    const friendsRef: AngularFirestoreDocument<User> = this.db.doc(`friends/${user.uid}`);
+    const userData = {
+      uid: user.uid,
+      email: user.email,
+      name: user.displayName,
+      photoURL: user.photoURL
+    }
+    const friendsData = {
+      uid: user.uid,
+    }
+    return (userRef.set(userData, { merge: true }), friendsRef.set(friendsData, { merge: true }))
+  }
 
   async addFriend(data: Friend[]) {
     const user = await this.afAuth.currentUser;

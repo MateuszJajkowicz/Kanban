@@ -20,6 +20,20 @@
   </div>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field *ngIf="isSignup" [color]="name?.valid && 'accent'">
+      <input
+        matInput
+        formControlName="name"
+        type="name"
+        placeholder="Name"
+        autocomplete="off"
+      />
+
+      <mat-error *ngIf="email?.invalid && email?.dirty">
+        You must enter a valid email address
+      </mat-error>
+    </mat-form-field>
+
     <mat-form-field [color]="email?.valid && 'accent'">
       <input
         matInput

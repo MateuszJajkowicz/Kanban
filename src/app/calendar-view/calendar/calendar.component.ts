@@ -15,6 +15,7 @@ import {
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
   CalendarView,
+  DAYS_OF_WEEK,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { MatDialog } from '@angular/material/dialog';
@@ -92,6 +93,8 @@ export class CalendarComponent  implements OnInit, OnDestroy{
     // },
   ];
 
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+
   refresh = new Subject<void>();
 
   sub: Subscription;
@@ -99,7 +102,6 @@ export class CalendarComponent  implements OnInit, OnDestroy{
   boards: Board[];
   tasks: any[] = [];
   events: CalendarEvent[] = [];
-  events2: any[] = [];
   isLoading: boolean = true;
 
   activeDayIsOpen: boolean = true;

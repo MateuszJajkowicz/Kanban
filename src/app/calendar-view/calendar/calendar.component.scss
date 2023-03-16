@@ -39,3 +39,23 @@ pre {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.calendar-tooltip {
+  display: table;
+  margin-left: -1.5rem;
+  margin-top: -24px;
+}
+
+@media screen and (max-width: 1000px) {
+.calendar-tooltip {
+    margin-left: -1rem;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .calendar-tooltip {
+    margin-top: -4rem;
+    margin-left: 0px;
+    padding-bottom: 0.5rem;
+  }
+}

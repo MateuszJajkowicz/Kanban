@@ -3,10 +3,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { User, Friend } from 'src/app/shared/models/user.model';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { User } from 'src/app/shared/models/user.model';
 import { ProfileService } from 'src/app/shared/services/profile/profile.service';
-import { map, startWith} from 'rxjs/operators';
+import { SnackService } from 'src/app/shared/services/snack/snack.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +23,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   strangers: User[];
   isFriendsPage = false;
 
-  constructor(private router: Router, public afAuth: AngularFireAuth, public profileService: ProfileService) { }
+  constructor(
+    private router: Router,
+    private afAuth: AngularFireAuth,
+    private profileService: ProfileService,
+    private snackService: SnackService,
+  ) { }
 
   ngOnInit(): void {
     this.sub = this.profileService
@@ -49,6 +53,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   handleUpdate() {
     this.profileService.updateUserName(this.userData.uid, this.userData.name);
+    this.snackService.success('Updated name succesfully');
   }
 
   handlePageChange() {

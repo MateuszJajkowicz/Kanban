@@ -6,6 +6,12 @@
   class="boards"
   (cdkDropListDropped)="drop($event)"
 >
+  <mat-icon
+    matTooltip="Hello there! If you're on phone you have to hold task for a moment to be able to move it
+      if you have two boards you can also move tasks between them."
+    class="board-tooltip"
+    >info</mat-icon
+  >
   <app-board
     cdkDrag
     *ngFor="let board of boards"

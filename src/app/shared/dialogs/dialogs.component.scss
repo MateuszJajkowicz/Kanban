@@ -15,8 +15,20 @@ textarea {
   width: 100%;
 }
 
-.priority-toggle{
-  margin-top: 1rem;
+.task-title{
+  display: inline;
+}
+
+.delete-button{
+  float: right;
+}
+
+.date-input {
+  margin-bottom: 1rem;
+}
+
+.priority {
+  color: #FFFFFFB3;
 }
 
 .blue {

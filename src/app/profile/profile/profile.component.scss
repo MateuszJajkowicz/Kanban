@@ -45,12 +45,20 @@ mat-card {
   width: 100%;
 }
 
-.image{
+.column-1{
   width: 50%;
   height: 100%;
 }
 
-.name{
+.p-style{
+  height: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: end;
+  justify-content: center;
+}
+
+.column-2{
   width: 50%;
   height: 100%;
 }

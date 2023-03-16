@@ -31,17 +31,19 @@
       </div>
     </div>
     <div class="col-md-4">
-      <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
+      <h3>
+        {{ viewDate | calendarDate : view + "ViewTitle" : "en" : weekStartsOn }}
+      </h3>
     </div>
     <div class="col-md-4">
       <div class="btn-group">
-        <div
+        <!-- <div
           class="btn btn-primary"
           (click)="setView(CalendarView.Month)"
           [class.active]="view === CalendarView.Month"
         >
           Month
-        </div>
+        </div> -->
         <!-- <div
           class="btn btn-primary"
           (click)="setView(CalendarView.Week)"
@@ -61,6 +63,11 @@
   </div>
   <br />
   <div [ngSwitch]="view">
+    <mat-icon
+      matTooltip="In order to see tasks in calendar firstly you have to add some dates to tasks."
+      class="calendar-tooltip"
+      >info</mat-icon
+    >
     <mwl-calendar-month-view
       *ngSwitchCase="CalendarView.Month"
       [viewDate]="viewDate"
@@ -70,6 +77,7 @@
       (dayClicked)="dayClicked($event.day)"
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
+      [weekStartsOn]="weekStartsOn"
     >
     </mwl-calendar-month-view>
     <!-- <mwl-calendar-week-view

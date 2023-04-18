@@ -1,6 +1,10 @@
-window.global = window
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
+window.global = window;
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from '../../shared/models/board.model';
 import { BoardService } from '../../shared/services/board/board.service';
@@ -13,21 +17,23 @@ import { SnackService } from 'src/app/shared/services/snack/snack.service';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+  styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
-
-  isMobile: boolean
+  isMobile: boolean;
   sortOrder = ['purple', 'blue', 'green', 'yellow', 'red', 'grey'];
   @Input() board: any = [];
-  @Output() taskMoved = new EventEmitter<{ previousContainer: string; newContainer: string }>();
+  @Output() taskMoved = new EventEmitter<{
+    previousContainer: string;
+    newContainer: string;
+  }>();
 
   constructor(
     private deviceService: DeviceDetectorService,
     private boardService: BoardService,
     private snackService: SnackService,
-    public dialog: MatDialog,
-  ) { }
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.deviceCheck();
@@ -62,32 +68,32 @@ export class BoardComponent implements OnInit {
   openBoardDialog(boardTitle: string): void {
     const dialogRef = this.dialog.open(BoardDialogComponent, {
       width: '400px',
-      data: { boardTitle }
+      data: { boardTitle },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-          this.boardService.updateBoardName(this.board.id, result);
-        }
+        this.boardService.updateBoardName(this.board.id, result);
+      }
     });
   }
 
   openTaskDialog(task?: Task, idx?: number): void {
-    var randomstring = require("randomstring");
+    var randomstring = require('randomstring');
     const newTask = { taskId: randomstring.generate(20), label: 'purple' };
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: '400px',
       data: task
         ? { task: { ...task }, isNew: false, boardId: this.board.id, idx }
-        : { task: newTask, isNew: true }
+        : { task: newTask, isNew: true },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (result.isNew) {
           this.boardService.updateTasks(this.board.id, [
             ...this.board.tasks,
-            result.task
+            result.task,
           ]);
         } else {
           const update = this.board.tasks;
@@ -103,7 +109,7 @@ export class BoardComponent implements OnInit {
   }
 
   handleTaskDone(task: Task, idx: number) {
-    task.label = 'gray';
+    task.label === 'gray' ? (task.label = 'purple') : (task.label = 'gray');
     const update = this.board.tasks;
     update.splice(idx, 1, task);
     this.boardService.updateTasks(this.board.id, this.board.tasks);
@@ -118,7 +124,7 @@ export class BoardComponent implements OnInit {
       width: '400px',
     });
 
-    dialogRef.afterClosed().subscribe(selectedFriend => {
+    dialogRef.afterClosed().subscribe((selectedFriend) => {
       if (selectedFriend) {
         this.boardService.shareTask(selectedFriend, task);
         this.snackService.success('Shared with a friend successfully');
@@ -128,19 +134,27 @@ export class BoardComponent implements OnInit {
 
   filterByDate(asc = 1) {
     var tasksWithDate = this.board.tasks
-      .filter((task: { startDate: any; endDate: any; }) => task.startDate != undefined && task.endDate != undefined)
-      .sort((a: any, b: any) => (asc) * (a.startDate - b.startDate));
-    var tasksWithoutDate = this.board.tasks
-      .filter((task: { startDate: any; endDate: any; }) => task.startDate == undefined && task.endDate == undefined);
-    this.board.tasks = [...tasksWithDate, ...tasksWithoutDate]
+      .filter(
+        (task: { startDate: any; endDate: any }) =>
+          task.startDate != undefined && task.endDate != undefined
+      )
+      .sort((a: any, b: any) => asc * (a.startDate - b.startDate));
+    var tasksWithoutDate = this.board.tasks.filter(
+      (task: { startDate: any; endDate: any }) =>
+        task.startDate == undefined && task.endDate == undefined
+    );
+    this.board.tasks = [...tasksWithDate, ...tasksWithoutDate];
     this.boardService.updateTasks(this.board.id, this.board.tasks);
   }
 
   filterByPriority(asc = 1) {
     var tasks = this.board.tasks;
-    tasks.sort((a: { label: string; }, b: { label: any; }) =>
-      (asc) * (this.sortOrder.indexOf(a.label) - this.sortOrder.indexOf(b.label)));
-    this.board.tasks = [...tasks]
+    tasks.sort(
+      (a: { label: string }, b: { label: any }) =>
+        asc *
+        (this.sortOrder.indexOf(a.label) - this.sortOrder.indexOf(b.label))
+    );
+    this.board.tasks = [...tasks];
     this.boardService.updateTasks(this.board.id, this.board.tasks);
   }
 }

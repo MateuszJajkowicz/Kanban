@@ -63,7 +63,8 @@
             </button>
             <button mat-menu-item (click)="handleTaskDone(task, i)">
               <mat-icon>check_circle</mat-icon>
-              <span>Check as done</span>
+              <span *ngIf="task.label === 'gray'">Check as undone</span>
+              <span *ngIf="task.label !== 'gray'">Check as done</span>
             </button>
             <button mat-menu-item (click)="handleSharingWithFriend(task)">
               <mat-icon>share</mat-icon>
@@ -98,7 +99,8 @@
             </button>
             <button mat-menu-item (click)="handleTaskDone(task, i)">
               <mat-icon>check_circle</mat-icon>
-              <span>Check as done</span>
+              <span *ngIf="task.label === 'gray'">Check as undone</span>
+              <span *ngIf="task.label !== 'gray'">Check as done</span>
             </button>
             <button mat-menu-item (click)="handleSharingWithFriend(task)">
               <mat-icon>share</mat-icon>

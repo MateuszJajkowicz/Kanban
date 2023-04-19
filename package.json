@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "nx serve",
+    "build": "nx build",
+    "watch": "nx build --watch --configuration development",
+    "test": "nx test"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +28,7 @@
     "firebase": "^9.13.0",
     "flatpickr": "^4.6.13",
     "i": "^0.3.7",
+    "loader-utils": "^3.2.1",
     "ngx-device-detector": "^4.0.1",
     "randomstring": "^1.2.3",
     "rxjs": "~7.5.0",
@@ -36,16 +37,24 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.7",
+    "@angular-devkit/core": "~14.2.7",
+    "@angular-devkit/schematics": "~14.2.7",
     "@angular/cli": "~14.2.7",
     "@angular/compiler-cli": "^14.2.0",
+    "@nrwl/angular": "15.9.2",
+    "@nrwl/nx-cloud": "latest",
+    "@nrwl/workspace": "15.9.2",
+    "@schematics/angular": "~14.2.7",
     "@types/jasmine": "~4.0.0",
     "@types/randomstring": "^1.1.8",
+    "cypress": "^12.3.0",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "nx": "15.9.2",
     "typescript": "~4.7.2"
   }
 }

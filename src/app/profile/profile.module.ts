@@ -7,15 +7,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FriendsComponent } from './friends/friends.component';
 
 @NgModule({
-  declarations: [
-    ProfileComponent,
-    FriendsComponent,
-  ],
+  declarations: [ProfileComponent, FriendsComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,
     SharedModule,
     MatAutocompleteModule,
-  ]
+  ],
 })
-export class ProfileModule { }
+export class ProfileModule {}

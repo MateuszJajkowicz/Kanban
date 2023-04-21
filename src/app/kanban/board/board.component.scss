@@ -36,6 +36,16 @@
     padding: 0px 16px 0px 0px !important;
   }
 
+  .mat-card-transition {
+    opacity: 1;
+    transition: opacity 0.2s linear;
+  }
+
+  .mat-card-transition:active {
+    opacity: 0.8;
+    transition: opacity 0.2s linear 0.3s;
+  }
+
   .task-description {
     padding: 16px;
     cursor: pointer;
@@ -57,8 +67,12 @@
   transition: transform 300ms ease;
 }
 
+.cdk-drag-preview {
+  opacity: 0.8;
+}
+
 .cdk-drag-placeholder {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .blue {
@@ -72,7 +86,7 @@
 }
 
 .yellow {
-  background: #ffcf44;
+  background: hsl(45, 100%, 63%);
   color: black;
 }
 

@@ -20,6 +20,7 @@ import { SnackService } from 'src/app/shared/services/snack/snack.service';
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
+  isMobile = false;
   dragDelay = 0;
   sortOrder = ['purple', 'blue', 'green', 'yellow', 'red', 'grey'];
   @Input() board: any = [];
@@ -40,10 +41,18 @@ export class BoardComponent implements OnInit {
   }
 
   deviceCheck() {
-    const isMobile = this.deviceService.isMobile();
-    if (isMobile === true) {
+    this.isMobile = this.deviceService.isMobile();
+    if (this.isMobile === true) {
       this.dragDelay = 500;
     }
+  }
+
+  getCardClasses(className: string): string[] {
+    let classes = [className];
+    if (this.isMobile) {
+      classes.push('mat-card-transition');
+    }
+    return classes;
   }
 
   taskDrop(event: CdkDragDrop<string[]>) {

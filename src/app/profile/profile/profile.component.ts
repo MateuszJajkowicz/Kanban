@@ -10,10 +10,9 @@ import { SnackService } from 'src/app/shared/services/snack/snack.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-
   userData: User;
   sub: Subscription;
   sub2: Subscription;
@@ -27,23 +26,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private router: Router,
     private afAuth: AngularFireAuth,
     private profileService: ProfileService,
-    private snackService: SnackService,
-  ) { }
+    private snackService: SnackService
+  ) {}
 
   ngOnInit(): void {
-    this.sub = this.profileService
-      .getUserData()
-      .subscribe(data => { this.userData = data[0], this.isLoading = false });
+    this.sub = this.profileService.getUserData().subscribe((data) => {
+      (this.userData = data[0]), (this.isLoading = false);
+    });
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  filter(val: string): (string|undefined)[] {
-    return this.strangers.map(x => x.name).filter(person =>
-      person?.toLowerCase().indexOf(val.toLowerCase()) === 0
-    );
+  filter(val: string): (string | undefined)[] {
+    return this.strangers
+      .map((x) => x.name)
+      .filter(
+        (person) => person?.toLowerCase().indexOf(val.toLowerCase()) === 0
+      );
   }
 
   logout() {

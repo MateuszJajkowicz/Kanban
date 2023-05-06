@@ -101,17 +101,18 @@ export class BoardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === undefined) return;
-      result.task.endDate = result.task.endDate ?? result.task.startDate;
-      if (result?.isNew) {
-        this.boardService.updateTasks(this.board.id, [
-          ...this.board.tasks,
-          result.task,
-        ]);
-      } else {
-        const update = this.board.tasks;
-        update.splice(result.idx, 1, result.task);
-        this.boardService.updateTasks(this.board.id, this.board.tasks);
+      if (result) {
+        result.task.endDate = result.task.endDate ?? result.task.startDate;
+        if (result?.isNew) {
+          this.boardService.updateTasks(this.board.id, [
+            ...this.board.tasks,
+            result.task,
+          ]);
+        } else {
+          const update = this.board.tasks;
+          update.splice(result.idx, 1, result.task);
+          this.boardService.updateTasks(this.board.id, this.board.tasks);
+        }
       }
     });
   }

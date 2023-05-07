@@ -102,8 +102,10 @@ export class BoardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        result.task.endDate = result.task.endDate ?? result.task.startDate;
-        if (result?.isNew) {
+        if (result.task?.startDate !== undefined) {
+          result.task.endDate = result.task.endDate ?? result.task.startDate;
+        }
+        if (result.isNew) {
           this.boardService.updateTasks(this.board.id, [
             ...this.board.tasks,
             result.task,

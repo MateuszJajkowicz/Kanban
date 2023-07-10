@@ -47,10 +47,13 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  getCardClasses(className: string): string[] {
-    let classes = [className];
+  getCardClasses(task: Task): (string | undefined)[] {
+    let classes: (string | undefined)[] = [task.label];
     if (this.isMobile) {
       classes.push('mat-card-transition');
+    }
+    if (task.startDate && task.endDate) {
+      classes.push('task-with-date-container');
     }
     return classes;
   }

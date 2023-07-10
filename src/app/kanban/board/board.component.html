@@ -42,7 +42,7 @@
       class="inner-card"
       *ngFor="let task of board.tasks; let i = index"
     >
-      <mat-card [ngClass]="getCardClasses(task.label)" class="task-container">
+      <mat-card [ngClass]="getCardClasses(task)" class="task-container">
         <div class="task-description" (click)="openTaskDialog(task, i)">
           {{ task.description }}
         </div>

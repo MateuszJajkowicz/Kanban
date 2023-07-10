@@ -49,10 +49,14 @@
   .task-container {
     display: grid;
     grid-template-columns: 10fr 1fr;
-    grid-template-rows: 10fr 1fr;
+    grid-template-rows: 10fr 0fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     cursor: pointer;
+  }
+
+  .task-with-date-container {
+    grid-template-rows: 10fr 1fr;
   }
 
   .task-description {
@@ -61,6 +65,7 @@
   }
 
   .task-date {
+    background-color: green;
     grid-area: 2 / 1 / 3 / 2;
     margin-top: -16px;
     padding-left: 1rem;

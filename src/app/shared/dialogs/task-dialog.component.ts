@@ -43,8 +43,8 @@ export class TaskDialogComponent implements OnInit {
         });
       } else {
         this.range.setValue({
-          start: this.data.task.startDate.toDate(),
-          end: this.data.task.endDate.toDate(),
+          start: this.data.task.startDate,
+          end: this.data.task.endDate,
         });
       }
     }

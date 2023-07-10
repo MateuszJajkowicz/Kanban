@@ -42,17 +42,23 @@
       class="inner-card"
       *ngFor="let task of board.tasks; let i = index"
     >
-      <mat-card [ngClass]="getCardClasses(task.label)">
+      <mat-card [ngClass]="getCardClasses(task.label)" class="task-container">
         <div class="task-description" (click)="openTaskDialog(task, i)">
           {{ task.description }}
         </div>
-        <button
-          class="task-menu"
-          mat-icon-button
-          [matMenuTriggerFor]="taskMenu"
+        <div
+          *ngIf="task.startDate && task.endDate"
+          class="task-date"
+          (click)="openTaskDialog(task, i)"
         >
-          <mat-icon>more_vert</mat-icon>
-        </button>
+          {{ task.startDate | date : "d/M/yy" }} -
+          {{ task.endDate | date : "d/M/yy" }}
+        </div>
+        <div class="task-menu" [matMenuTriggerFor]="taskMenu">
+          <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
         <mat-menu #taskMenu="matMenu">
           <button mat-menu-item (click)="openTaskDialog(task, i)">
             <mat-icon>edit</mat-icon>

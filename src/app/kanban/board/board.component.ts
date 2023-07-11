@@ -6,7 +6,12 @@ import {
 } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Task } from '../../shared/models/board.model';
+import {
+  Board,
+  BoardDialogResult,
+  Task,
+  TaskDialogResult,
+} from '../../shared/models/board.model';
 import { BoardService } from '../../shared/services/board/board.service';
 import { TaskDialogComponent } from '../../shared/dialogs/task-dialog.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -23,7 +28,7 @@ export class BoardComponent implements OnInit {
   isMobile = false;
   dragDelay = 0;
   sortOrder = ['purple', 'blue', 'green', 'yellow', 'red', 'grey'];
-  @Input() board: any = [];
+  @Input() board: Board;
   @Output() taskMoved = new EventEmitter<{
     previousContainer: string;
     newContainer: string;
@@ -58,8 +63,11 @@ export class BoardComponent implements OnInit {
     return classes;
   }
 
-  taskDrop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
+  taskDrop(event: CdkDragDrop<Task[]>) {
+    if (
+      event.previousContainer === event.container &&
+      this.board.tasks !== undefined
+    ) {
       moveItemInArray(
         this.board.tasks,
         event.previousIndex,
@@ -86,9 +94,12 @@ export class BoardComponent implements OnInit {
       data: { boardTitle },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.boardService.updateBoardName(this.board.id, result);
+    dialogRef.afterClosed().subscribe((result: BoardDialogResult) => {
+      if (result && this.board.id !== undefined) {
+        this.boardService.updateBoardName(
+          this.board.id,
+          result as unknown as string
+        );
       }
     });
   }
@@ -103,19 +114,19 @@ export class BoardComponent implements OnInit {
         : { task: newTask, isNew: true },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: TaskDialogResult) => {
       if (result) {
         if (result.task?.startDate !== undefined) {
           result.task.endDate = result.task.endDate ?? result.task.startDate;
         }
-        if (result.isNew) {
+        if (result.isNew && this.board.tasks !== undefined) {
           this.boardService.updateTasks(this.board.id, [
             ...this.board.tasks,
             result.task,
           ]);
-        } else {
+        } else if (result.idx !== undefined) {
           const update = this.board.tasks;
-          update.splice(result.idx, 1, result.task);
+          update?.splice(result.idx, 1, result.task);
           this.boardService.updateTasks(this.board.id, this.board.tasks);
         }
       }
@@ -123,18 +134,18 @@ export class BoardComponent implements OnInit {
   }
 
   handleBoardDelete() {
-    this.boardService.deleteBoard(this.board.id);
+    this.board.id && this.boardService.deleteBoard(this.board.id);
   }
 
   handleTaskDone(task: Task, idx: number) {
     task.label === 'gray' ? (task.label = 'purple') : (task.label = 'gray');
     const update = this.board.tasks;
-    update.splice(idx, 1, task);
+    update?.splice(idx, 1, task);
     this.boardService.updateTasks(this.board.id, this.board.tasks);
   }
 
   handleTaskDelete(task: Task) {
-    this.boardService.deleteTask(this.board.id, task);
+    this.board.id && this.boardService.deleteTask(this.board.id, task);
   }
 
   handleSharingWithFriend(task: Task) {
@@ -151,28 +162,32 @@ export class BoardComponent implements OnInit {
   }
 
   filterByDate(asc = 1) {
-    var tasksWithDate = this.board.tasks
-      .filter(
-        (task: { startDate: any; endDate: any }) =>
-          task.startDate != undefined && task.endDate != undefined
+    const tasksWithDate = this.board.tasks
+      ?.filter(
+        (task: Task) =>
+          task.startDate !== undefined && task.endDate !== undefined
       )
-      .sort((a: any, b: any) => asc * (a.startDate - b.startDate));
-    var tasksWithoutDate = this.board.tasks.filter(
-      (task: { startDate: any; endDate: any }) =>
-        task.startDate == undefined && task.endDate == undefined
+      .sort(
+        (a: Task, b: Task) =>
+          asc * (a.startDate!.getTime() - b.startDate!.getTime())
+      );
+
+    const tasksWithoutDate = this.board.tasks?.filter(
+      (task: Task) => task.startDate === undefined && task.endDate === undefined
     );
-    this.board.tasks = [...tasksWithDate, ...tasksWithoutDate];
+
+    this.board.tasks = [...(tasksWithDate || []), ...(tasksWithoutDate || [])];
     this.boardService.updateTasks(this.board.id, this.board.tasks);
   }
 
   filterByPriority(asc = 1) {
     var tasks = this.board.tasks;
-    tasks.sort(
-      (a: { label: string }, b: { label: any }) =>
+    tasks?.sort(
+      (a: { label: string }, b: { label: string }) =>
         asc *
         (this.sortOrder.indexOf(a.label) - this.sortOrder.indexOf(b.label))
     );
-    this.board.tasks = [...tasks];
+    this.board.tasks = [...tasks!];
     this.boardService.updateTasks(this.board.id, this.board.tasks);
   }
 }

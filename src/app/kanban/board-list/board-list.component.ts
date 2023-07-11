@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Board } from '../../shared/models/board.model';
+import { Board, BoardDialogResult } from '../../shared/models/board.model';
 import { Subscription } from 'rxjs';
 import { BoardService } from '../../shared/services/board/board.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -20,17 +20,7 @@ export class BoardListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.boardService.getUserBoards().subscribe((boards) => {
-      (this.boards = boards.map((board) => {
-        const modifiedTasks = board.tasks?.map((task) => {
-          if (task.startDate && task.endDate) {
-            task.startDate = (task.startDate as any).toDate();
-            task.endDate = (task.endDate as any).toDate();
-          }
-          return task;
-        });
-        return { ...board, tasks: modifiedTasks };
-      })),
-        (this.isLoading = false);
+      (this.boards = boards), (this.isLoading = false);
     });
   }
 
@@ -47,8 +37,8 @@ export class BoardListComponent implements OnInit, OnDestroy {
     previousContainer,
     newContainer,
   }: {
-    previousContainer: any;
-    newContainer: any;
+    previousContainer: string;
+    newContainer: string;
   }) {
     const previousTasks = this.boards.find(
       (b) => b.id === previousContainer
@@ -68,10 +58,10 @@ export class BoardListComponent implements OnInit, OnDestroy {
       data: {},
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: BoardDialogResult) => {
       if (result) {
         this.boardService.createBoard({
-          title: result,
+          title: result as unknown as string,
           priority: this.boards.length,
         });
       }

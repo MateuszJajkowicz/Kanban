@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoardService } from '../services/board/board.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { toDate } from 'date-fns';
+import { TaskDialogData } from '../models/board.model';
 
 @Component({
   selector: 'app-task-dialog',
@@ -16,18 +16,18 @@ export class TaskDialogComponent implements OnInit {
     end: new FormControl<Date | null>(null),
   });
 
-  get getRangeStart(): any {
-    return this.range.get('start');
+  get getRangeStart(): FormControl<Date | null> {
+    return this.range.get('start') as FormControl<Date | null>;
   }
 
-  get getRangeEnd(): any {
-    return this.range.get('end');
+  get getRangeEnd(): FormControl<Date | null> {
+    return this.range.get('end') as FormControl<Date | null>;
   }
 
   constructor(
     public dialogRef: MatDialogRef<TaskDialogComponent>,
     private boardService: BoardService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: TaskDialogData
   ) {}
 
   ngOnInit(): void {
@@ -36,17 +36,10 @@ export class TaskDialogComponent implements OnInit {
 
   setValue() {
     if (this.data.task.startDate && this.data.task.endDate) {
-      if (this.data.isCalendar) {
-        this.range.setValue({
-          start: toDate(this.data.task.startDate),
-          end: toDate(this.data.task.endDate),
-        });
-      } else {
-        this.range.setValue({
-          start: this.data.task.startDate,
-          end: this.data.task.endDate,
-        });
-      }
+      this.range.setValue({
+        start: this.data.task.startDate,
+        end: this.data.task.endDate,
+      });
     }
   }
 
@@ -60,10 +53,10 @@ export class TaskDialogComponent implements OnInit {
   }
 
   handleRangeChange() {
-    if (this.getRangeStart.value !== '') {
+    if (this.getRangeStart.value !== null) {
       this.data.task.startDate = this.getRangeStart.value;
     }
-    if (this.getRangeEnd.value !== '') {
+    if (this.getRangeEnd.value !== null) {
       this.data.task.endDate = this.getRangeEnd.value;
     }
   }

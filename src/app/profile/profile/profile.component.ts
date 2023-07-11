@@ -18,7 +18,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   sub2: Subscription;
   isLoading: boolean = true;
   myControl: FormControl = new FormControl();
-  filteredOptions: Observable<any[]>;
   strangers: User[];
   isFriendsPage = false;
 

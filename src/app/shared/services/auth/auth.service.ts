@@ -2,22 +2,21 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider } from 'firebase/auth';
-import { User } from "../../models/user.model";
+import { User } from '../../models/user.model';
 import { Observable } from 'rxjs';
 import { ProfileService } from '../profile/profile.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   user$: Observable<User | null | undefined>;
 
   constructor(
     private afAuth: AngularFireAuth,
     private profileService: ProfileService,
-    private router: Router) {
-   }
+    private router: Router
+  ) {}
 
   GoogleAuth() {
     return this.AuthLogin(new GoogleAuthProvider());
@@ -27,8 +26,8 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        if (result.additionalUserInfo?.isNewUser) {
-          this.profileService.createUserData(result.user)
+        if (result.user && result.additionalUserInfo?.isNewUser) {
+          this.profileService.createUserData(result.user as User);
         }
         this.router.navigate(['/', 'kanban']);
       })

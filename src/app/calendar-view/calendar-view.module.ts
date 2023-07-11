@@ -12,10 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    CalendarComponent,
-    CalendarHeaderComponent
-  ],
+  declarations: [CalendarComponent, CalendarHeaderComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -24,8 +21,10 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     FlatpickrModule.forRoot(),
     MatDialogModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
 })
-
-export class CalendarViewModule { }
+export class CalendarViewModule {}

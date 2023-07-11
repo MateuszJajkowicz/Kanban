@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BoardDialogData } from 'src/app/shared/models/board.model';
 
 @Component({
   selector: 'app-board-dialog',
@@ -12,30 +13,32 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
         <textarea
           placeholder="Board title"
           matInput
-          [(ngModel)]="data.title"
+          [(ngModel)]="data.boardTitle"
           cdkFocusInitial
           cdkTextareaAutosize
         ></textarea>
       </mat-form-field>
-      <mat-error *ngIf="!data.title">
+      <mat-error *ngIf="!data.boardTitle">
         Board title is <strong>required</strong>
       </mat-error>
     </div>
     <div mat-dialog-actions>
-      <button mat-raised-button color="accent" [mat-dialog-close]="data.title" [disabled]="!data.title">
+      <button
+        mat-raised-button
+        color="accent"
+        [mat-dialog-close]="data.boardTitle"
+        [disabled]="!data.boardTitle"
+      >
         Create
       </button>
-      <button mat-button (click)="onNoClick()">
-        Cancel
-      </button>
+      <button mat-button (click)="onNoClick()">Cancel</button>
     </div>
-  `
+  `,
 })
 export class NewBoardDialogComponent {
-
   constructor(
     public dialogRef: MatDialogRef<NewBoardDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: BoardDialogData
   ) {}
 
   onNoClick(): void {

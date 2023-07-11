@@ -32,8 +32,8 @@
     cdkDropList
     cdkDropListOrientation="vertical"
     class="tasks"
-    [id]="board.id"
-    [cdkDropListData]="board.tasks"
+    [id]="board.id!"
+    [cdkDropListData]="board.tasks || []"
     (cdkDropListDropped)="taskDrop($event)"
   >
     <div

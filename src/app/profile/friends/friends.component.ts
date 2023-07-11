@@ -22,10 +22,10 @@ export class FriendsComponent implements OnInit, OnDestroy {
   sub2: Subscription;
   isLoading = true;
   myControl: FormControl = new FormControl();
-  filteredOptions: Observable<any[]>;
+  filteredOptions: Observable<(string | undefined)[]>;
   strangers: User[];
-  friends: Friend[] = [];
-  @Input() userData: any = [];
+  friends: User[] | undefined = [];
+  @Input() userData: User;
   @Output() isFriendsPage = new EventEmitter<boolean>();
 
   constructor(public profileService: ProfileService) {}
@@ -33,7 +33,11 @@ export class FriendsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.profileService
       .getUserFriends()
-      .subscribe((friends) => (this.friends = friends[0].friends));
+      .subscribe(
+        (friends) => (
+          (this.friends = friends[0].friends), console.log(this.friends)
+        )
+      );
 
     this.sub2 = this.profileService.getAllUsersData().subscribe((allPeople) => {
       this.getStrangers(allPeople), (this.isLoading = false);
@@ -96,7 +100,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   handleFriendDelete(friend: Friend) {
-    this.profileService.deleteFriend(this.userData.uid, friend);
+    this.userData.uid &&
+      this.profileService.deleteFriend(this.userData.uid, friend);
   }
 
   changePageToProfile(value: boolean) {

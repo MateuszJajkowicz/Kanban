@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/shared/services/profile/profile.service';
@@ -7,10 +7,9 @@ import { ProfileService } from 'src/app/shared/services/profile/profile.service'
 @Component({
   selector: 'app-email-login',
   templateUrl: './email-login.component.html',
-  styleUrls: ['./email-login.component.scss']
+  styleUrls: ['./email-login.component.scss'],
 })
 export class EmailLoginComponent implements OnInit {
-
   form: FormGroup;
   type: 'login' | 'signup' | 'reset' = 'login';
   loading = false;
@@ -21,7 +20,7 @@ export class EmailLoginComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private fb: FormBuilder,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -101,13 +100,19 @@ export class EmailLoginComponent implements OnInit {
         this.router.navigate(['/', 'kanban']);
       }
       if (this.isSignup) {
-        var photoURL = 'https://api.dicebear.com/5.x/avataaars-neutral/svg?seed='+name;
+        var photoURL =
+          'https://api.dicebear.com/5.x/avataaars-neutral/svg?seed=' + name;
         var uid: string;
         await this.afAuth.createUserWithEmailAndPassword(email, password);
-        await this.afAuth.authState.subscribe(result => {
+        await this.afAuth.authState.subscribe((result) => {
           if (result) {
             uid = result.uid;
-            this.profileService.createUserData({displayName: name, email: email, uid: uid, photoURL: photoURL});
+            this.profileService.createUserData({
+              name: name,
+              email: email,
+              uid: uid,
+              photoURL: photoURL,
+            });
           }
         });
         this.router.navigate(['/', 'kanban']);
@@ -116,11 +121,9 @@ export class EmailLoginComponent implements OnInit {
         await this.afAuth.sendPasswordResetEmail(email);
         this.serverMessage = 'Check your email';
       }
-
     } catch (error) {
       this.serverMessage = error;
     }
     this.loading = false;
-
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BoardDialogData } from 'src/app/shared/models/board.model';
 
 @Component({
   selector: 'app-board-dialog',
@@ -22,21 +23,23 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
       </mat-error>
     </div>
     <div mat-dialog-actions>
-      <button mat-raised-button color="accent" [mat-dialog-close]="data.boardTitle" [disabled]="!data.boardTitle">
+      <button
+        mat-raised-button
+        color="accent"
+        [mat-dialog-close]="data.boardTitle"
+        [disabled]="!data.boardTitle"
+      >
         Change
       </button>
-      <button mat-button (click)="onNoClick()">
-        Cancel
-      </button>
+      <button mat-button (click)="onNoClick()">Cancel</button>
     </div>
-  `
+  `,
 })
 export class BoardDialogComponent {
-
   constructor(
     public dialogRef: MatDialogRef<BoardDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: BoardDialogData
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();

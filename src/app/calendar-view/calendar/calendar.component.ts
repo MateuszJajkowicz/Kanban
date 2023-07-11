@@ -1,14 +1,5 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Inject,
-} from '@angular/core';
-import {
-  isSameDay,
-  isSameMonth,
-  toDate,
-} from 'date-fns';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject, Subscription } from 'rxjs';
 import {
   CalendarEvent,
@@ -28,32 +19,32 @@ const colors: Record<string, EventColor> = {
   red: {
     primary: '#e74a4a',
     secondary: '#e74a4a',
-    secondaryText: 'red'
+    secondaryText: 'red',
   },
   blue: {
     primary: '#71deff',
     secondary: '#71deff',
-    secondaryText: 'blue'
+    secondaryText: 'blue',
   },
   yellow: {
     primary: '#ffcf44',
     secondary: '#ffcf44',
-    secondaryText: 'yellow'
+    secondaryText: 'yellow',
   },
   green: {
     primary: '#36e9b6',
     secondary: '#36e9b6',
-    secondaryText: 'green'
+    secondaryText: 'green',
   },
   purple: {
     primary: '#b15cff',
     secondary: '#b15cff',
-    secondaryText: 'purple'
+    secondaryText: 'purple',
   },
   gray: {
     primary: '#808080',
     secondary: '#808080',
-    secondaryText: 'gray'
+    secondaryText: 'gray',
   },
 };
 
@@ -62,8 +53,7 @@ const colors: Record<string, EventColor> = {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent  implements OnInit, OnDestroy{
-
+export class CalendarComponent implements OnInit, OnDestroy {
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -100,7 +90,7 @@ export class CalendarComponent  implements OnInit, OnDestroy{
   sub: Subscription;
 
   boards: Board[];
-  tasks: any[] = [];
+  tasks: Task[] = [];
   events: CalendarEvent[] = [];
   isLoading: boolean = true;
 
@@ -111,13 +101,15 @@ export class CalendarComponent  implements OnInit, OnDestroy{
   constructor(
     public boardService: BoardService,
     public dialog: MatDialog,
-    @Inject(DOCUMENT) private document: any
-  ) { }
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
   ngOnInit() {
-    this.sub = this.boardService
-      .getUserBoards()
-      .subscribe(boards => { this.boards = boards, this.events = this.getEvents(boards), this.isLoading = false });
+    this.sub = this.boardService.getUserBoards().subscribe((boards) => {
+      (this.boards = boards),
+        (this.events = this.getEvents(boards)),
+        (this.isLoading = false);
+    });
     this.document.body.classList.add(this.darkThemeClass);
   }
 
@@ -126,22 +118,23 @@ export class CalendarComponent  implements OnInit, OnDestroy{
     this.document.body.classList.remove(this.darkThemeClass);
   }
 
-  getEvents(boards: (Board & { id: string; })[]): CalendarEvent<any>[]{
+  getEvents(
+    boards: (Board & { id: string })[]
+  ): CalendarEvent<Task & { boardId: string }>[] {
     var eventsList: CalendarEvent[];
     if (boards) {
-        boards.forEach(board => {
-          board.tasks?.forEach(task => {
-            task.boardId = board.id;
-          });
-          this.tasks = (this.tasks || [])
-            .concat(board.tasks)
-            .filter(task => task.startDate != undefined && task.endDate != undefined);
+      boards.forEach((board) => {
+        board.tasks?.forEach((task) => {
+          task.boardId = board.id;
         });
-      this.tasks.forEach(task => {
-        task.startDate = toDate(task.startDate.seconds*1000);
-        task.endDate = toDate(task.endDate.seconds*1000);
+        this.tasks = (this.tasks || [])
+          .concat(board.tasks!)
+          .filter(
+            (task) => task.startDate != undefined && task.endDate != undefined
+          );
       });
-      var events = this.tasks.map(task => {
+
+      var events = this.tasks.map((task) => {
         return <CalendarEvent>{
           id: task.boardId,
           start: task.startDate,
@@ -159,10 +152,9 @@ export class CalendarComponent  implements OnInit, OnDestroy{
         };
       });
       eventsList = events;
-    }
-    else {
+    } else {
       eventsList = [];
-    };
+    }
     return eventsList;
   }
 
@@ -204,8 +196,10 @@ export class CalendarComponent  implements OnInit, OnDestroy{
   }
 
   openTaskDialog(event: CalendarEvent): void {
-    var board = this.boards.filter(board => board.id == event.id)
-    var idx = board[0].tasks?.findIndex(item => item.taskId == event.cssClass);
+    var board = this.boards.filter((board) => board.id == event.id);
+    var idx = board[0].tasks?.findIndex(
+      (item) => item.taskId == event.cssClass
+    );
     var boardId = event.id?.toString();
     var list = [];
     var task2 = [];
@@ -219,14 +213,18 @@ export class CalendarComponent  implements OnInit, OnDestroy{
         endDate: x.end,
       };
     });
-    task2.push({ task: task[0], boardId: event.id, isNew: false, isCalendar: true})
+    task2.push({
+      task: task[0],
+      boardId: event.id,
+      isNew: false,
+    });
 
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: '400px',
-      data: task2[0]
+      data: task2[0],
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (idx) {
           const update = board[0].tasks;
@@ -234,7 +232,7 @@ export class CalendarComponent  implements OnInit, OnDestroy{
           this.boardService.updateTasks(boardId, board[0].tasks);
         }
       }
-    })
+    });
   }
 
   // addEvent(): void {
